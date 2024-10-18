@@ -1,7 +1,8 @@
 interface Card {
   id: number,
   original: string,
-  translation: string
+  translation: string,
+  wrongOptions?: string[]
 }
 
 interface Deck {
