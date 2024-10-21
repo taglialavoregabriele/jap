@@ -1,8 +1,14 @@
 interface Card {
   id: number,
-  original: string,
-  translation: string,
-  wrongOptions?: string[]
+  originalSentence: string,
+}
+
+interface CardMatchPair extends Card {
+  translation: string
+}
+
+interface CardMissingWord extends Card {
+  missingPositions: number[]
 }
 
 interface Deck {
