@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule, RouterOutlet, Routes } from '@angular/router';
-import { EditDecksComponent } from './edit-decks/edit-decks.component';
-import { GameComponent } from './game/game.component';
-import { SettingsComponent } from './settings/settings.component';
+import { Router, RouterOutlet } from '@angular/router';
+
 
 
 @Component({
