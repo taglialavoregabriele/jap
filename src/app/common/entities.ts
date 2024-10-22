@@ -1,17 +1,11 @@
-interface Card {
+export interface Card {
   id: number,
   originalSentence: string,
-}
-
-interface CardMatchPair extends Card {
   translation: string
 }
 
-interface CardMissingWord extends Card {
-  missingPositions: number[]
-}
-
-interface Deck {
+export interface Deck {
+  id: number,
   name: string,
   cards: Card[]
 }

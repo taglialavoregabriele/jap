@@ -1,25 +1,43 @@
-<p>
-  <mat-form-field>
-    <mat-label>Select deck</mat-label>
-    <mat-select>
-      <mat-option value="option">Option</mat-option> <!-- TODO config decks -->
-    </mat-select>
-  </mat-form-field>
-</p>
-<p>
-  <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder">
-    <mat-hint>Hint</mat-hint>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder">
-    <mat-hint>Hint</mat-hint>
-  </mat-form-field>
-  <button mat-mini-fab aria-label="Example icon button with a home icon">
-    <mat-icon>add</mat-icon>
-  </button>
-</p>
+<ng-container *ngTemplateOutlet="editDeckSection"></ng-container>
+
+<ng-template #editDeckSection>
+  <p>
+    <mat-form-field>
+      <mat-label>Select deck</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let deck of decks" value="deck.name">{{deck.name}}</mat-option> <!-- TODO config decks -->
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <div *ngIf="selectedDeck">
+    <div *ngFor="let card of selectedDeck!.cards">
+      <mat-form-field appearance="outline">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder" value="{{card.originalSentence}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Outline form field</mat-label>
+        <input matInput placeholder="Placeholder" value="{{card.translation}}">
+      </mat-form-field>
+      <button mat-mini-fab aria-label="Example icon button with a home icon"> <!-- TODO add function -->
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Original</mat-label>
+      <input matInput placeholder="Placeholder">
+      <!-- <mat-hint>Hint</mat-hint> -->
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Translation</mat-label>
+      <input matInput placeholder="Placeholder">
+    </mat-form-field>
+    <button mat-mini-fab aria-label="Example icon button with a home icon"> <!-- TODO add function -->
+      <mat-icon>add</mat-icon>
+    </button>
+  </p>
+</ng-template>
 
 <!-- TODO add existing deck cards -->
