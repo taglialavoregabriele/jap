@@ -17,7 +17,6 @@ export class AppComponent {
   constructor(
     protected router: Router,
   ) {
-
   }
 
   goToGame() {

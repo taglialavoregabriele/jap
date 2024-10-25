@@ -4,10 +4,13 @@
   <p>
     <mat-form-field>
       <mat-label>Select deck</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let deck of decks" value="deck.name">{{deck.name}}</mat-option> <!-- TODO config decks -->
+      <mat-select [(ngModel)]="selectedDeck">
+        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option> <!-- TODO config decks -->
       </mat-select>
     </mat-form-field>
+    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteDeck()">
+      <mat-icon>close</mat-icon>
+    </button>
   </p>
   <div *ngIf="selectedDeck">
     <div *ngFor="let card of selectedDeck!.cards; let i = index">
@@ -21,8 +24,7 @@
         <input matInput placeholder="Placeholder" [value]="selectedDeck.cards[i].translation"
           [(ngModel)]="selectedDeck.cards[i].translation">
       </mat-form-field>
-      <button mat-mini-fab aria-label="Example icon button with a home icon"
-        (click)="deleteCard(selectedDeck.cards[i])">
+      <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteCard(i)">
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -39,10 +41,12 @@
       <input matInput placeholder="Placeholder" [value]="newCard.translation" [(ngModel)]="newCard.translation">
     </mat-form-field>
     <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addCard()">
-      <!-- TODO add function -->
       <mat-icon>add</mat-icon>
     </button>
   </p>
+  <button aria-label="Example icon button with a home icon" (click)="saveChanges()">
+    save
+  </button>
 </ng-template>
 
 <!-- TODO add existing deck cards -->

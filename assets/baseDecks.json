@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "sdswadawad",
+    "cards": [
+      {
+        "id": 1,
+        "originalSentence": "asfsa",
+        "translation": "also"
+      },
+      {
+        "id": 2,
+        "originalSentence": "asfsa",
+        "translation": "also"
+      }
+    ]
+  }
+]
