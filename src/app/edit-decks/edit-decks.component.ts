@@ -25,22 +25,34 @@ import { FormsModule } from '@angular/forms';
   ]
 })
 export class EditDecksComponent {
-  decks: Deck[] = [] //TODO get from json
-  selectedDeck?: Deck //TODO make selected by default
+  decks: Deck[] = [] //TODO deal with null
+
+  selectedDeck: Deck = {
+    _id: "-1",
+    name: "",
+    cards: []
+  }
+
   newCard: Card = {
-    id: 0,
+    _id: "-1",
     originalSentence: '',
     translation: ''
+  }
+
+  newDeck: Deck = {
+    _id: "-1",
+    name: "",
+    cards: []
   }
 
   constructor(protected storeService: StoreService) {
   }
 
   ngOnInit(): void {
-    //TODO deal with selectedDeck
-    this.selectedDeck = { id: 1, name: "sdsad", cards: [{ id: 1, originalSentence: "asfsa", translation: "also" }, { id: 2, originalSentence: "asfsa", translation: "also" }] }
-    this.decks.push(this.selectedDeck)
-    this.storeService.setDecks(this.decks)
+    this.storeService.getDecks().then(decks => {
+      this.decks = decks
+      this.selectedDeck = this.decks[0]
+    })
   }
 
   //TODO add confirm window
@@ -50,13 +62,17 @@ export class EditDecksComponent {
 
   addCard() {
     if (!this.selectedDeck) return
-    this.newCard!.id = this.getLastDeckId(this.selectedDeck!) + 1
+    this.newCard!._id = (Number(this.getLastDeckCardId(this.selectedDeck!)) + 1) + ''
     this.selectedDeck!.cards.push(this.newCard!)
     this.newCard = {
-      id: 0,
+      _id: "0",
       originalSentence: '',
       translation: ''
     }
+  }
+
+  addDeck() {
+    this.decks.push(this.newDeck)
   }
 
   deleteDeck() {
@@ -64,10 +80,10 @@ export class EditDecksComponent {
   }
 
   saveChanges() {
-    console.log(this.storeService.getDecks())
+    this.storeService.setDecks(this.decks)
   }
 
-  private getLastDeckId(deck: Deck): number {
-    return Math.max(...deck.cards.map(o => o.id))
+  private getLastDeckCardId(deck: Deck): string {
+    return Math.max(...deck.cards.map(o => Number(o._id))) + ''
   }
 }

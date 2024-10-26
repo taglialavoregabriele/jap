@@ -1,11 +1,11 @@
 export interface Card {
-  id: number,
+  _id: string,
   originalSentence: string,
   translation: string
 }
 
 export interface Deck {
-  id: number,
+  _id: string,
   name: string,
   cards: Card[]
 }

@@ -8,6 +8,9 @@
         <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option> <!-- TODO config decks -->
       </mat-select>
     </mat-form-field>
+    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addDeck()">
+      <mat-icon>add</mat-icon>
+    </button>
     <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteDeck()">
       <mat-icon>close</mat-icon>
     </button>
