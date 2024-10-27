@@ -12,7 +12,8 @@ import { MatInputModule } from "@angular/material/input";
 @Component({
   template: `
     <form [formGroup]="form" (ngSubmit)="submit(form)">
-      <h1 mat-dialog-title>Add file</h1>
+      <h1 mat-dialog-title *ngIf="isNew">Add deck</h1>
+      <h1 mat-dialog-title *ngIf="!isNew">Edit deck</h1>
       <mat-dialog-content>
         <mat-form-field>
           <input matInput formControlName="name" placeholder="Enter deck name">
@@ -28,6 +29,7 @@ import { MatInputModule } from "@angular/material/input";
 export class AddDeckDialogComponent implements OnInit {
 
   form: FormGroup;
+  isNew: boolean;
 
   constructor(
     protected formBuilder: FormBuilder,
@@ -39,6 +41,7 @@ export class AddDeckDialogComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: this.data.name ? this.data.name : ''
     })
+    this.isNew = this.data.isNew
   }
 
   submit(form) {

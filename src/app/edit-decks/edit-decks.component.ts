@@ -18,7 +18,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { AddDeckDialogComponent, AddDeckDialogModule } from './add-decks-dialog';
+import { AddDeckDialogComponent, AddDeckDialogModule } from './addDecksModal/add-decks-dialog';
 import { filter } from 'rxjs';
 
 @Component({
@@ -31,13 +31,13 @@ import { filter } from 'rxjs';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatButtonModule,
     MatSelectModule,
     CommonModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    MatButtonModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
@@ -102,7 +102,8 @@ export class EditDecksComponent implements OnInit {
   addDeckOpenModal(isNew: boolean) {
     this.addDeckModalRef = this.dialog.open(AddDeckDialogComponent, {
       data: {
-        name: !isNew ? this.selectedDeck.name : ''
+        name: !isNew ? this.selectedDeck.name : '',
+        isNew
       }
     });
 
@@ -123,6 +124,7 @@ export class EditDecksComponent implements OnInit {
 
   deleteDeck() {
     this.decks.splice(this.decks.findIndex(d => d._id === this.selectedDeck._id), 1)
+    this.selectedDeck = null;
   }
 
   saveChanges() {
