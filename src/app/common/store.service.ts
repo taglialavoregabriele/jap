@@ -41,6 +41,12 @@ export class StoreService {
         }
       })
     }
+    //TODO do it properly
+    this.decksDB.allDocs({ include_docs: true }).then(docs => {
+      docs.rows.forEach(i => {
+        if (!decks.find(j => j._id == i.doc?._id)) this.decksDB.remove(i.doc!)
+      })
+    })
   }
 
 }

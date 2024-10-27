@@ -5,11 +5,16 @@
     <mat-form-field>
       <mat-label>Select deck</mat-label>
       <mat-select [(ngModel)]="selectedDeck">
-        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option> <!-- TODO config decks -->
+        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+        <!-- TODO config decks -->
       </mat-select>
     </mat-form-field>
-    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addDeck()">
+    <!-- add edit button and pass current deck-->
+    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addDeckOpenModal(true)">
       <mat-icon>add</mat-icon>
+    </button>
+    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addDeckOpenModal(false)">
+      <mat-icon>edit</mat-icon>
     </button>
     <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteDeck()">
       <mat-icon>close</mat-icon>
@@ -51,5 +56,3 @@
     save
   </button>
 </ng-template>
-
-<!-- TODO add existing deck cards -->

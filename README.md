@@ -10,4 +10,4 @@ setting kanji/kanji + furigana/hiragana
 forse un "inserisci le particelle"? dipende dalla mia voglia
 lettura/scrittura json
 3 pagine in tutto, config, gioco corrente, edit mazzi
-inizia a programmare davvero
+aggiungere validation ovunque
