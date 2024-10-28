@@ -10,6 +10,9 @@ export interface Deck {
   cards: Card[]
 }
 
+export enum GameType {
+  MATCH_PAIRS
+}
 export interface GameSettings {
-
+  selectedGame: GameType
 }

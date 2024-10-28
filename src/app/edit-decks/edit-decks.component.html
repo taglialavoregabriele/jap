@@ -10,13 +10,13 @@
       </mat-select>
     </mat-form-field>
     <!-- add edit button and pass current deck-->
-    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addDeckOpenModal(true)">
+    <button mat-mini-fab (click)="addDeckOpenModal(true)">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addDeckOpenModal(false)">
+    <button mat-mini-fab (click)="addDeckOpenModal(false)">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteDeck()">
+    <button mat-mini-fab (click)="deleteDeck()">
       <mat-icon>close</mat-icon>
     </button>
   </p>
@@ -32,7 +32,7 @@
         <input matInput placeholder="Placeholder" [value]="selectedDeck.cards[i].translation"
           [(ngModel)]="selectedDeck.cards[i].translation">
       </mat-form-field>
-      <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="deleteCard(i)">
+      <button mat-mini-fab (click)="deleteCard(i)">
         <mat-icon>close</mat-icon>
       </button>
     </div>
@@ -48,11 +48,11 @@
       <mat-label>Translation</mat-label>
       <input matInput placeholder="Placeholder" [value]="newCard.translation" [(ngModel)]="newCard.translation">
     </mat-form-field>
-    <button mat-mini-fab aria-label="Example icon button with a home icon" (click)="addCard()">
+    <button mat-mini-fab (click)="addCard()">
       <mat-icon>add</mat-icon>
     </button>
   </p>
-  <button aria-label="Example icon button with a home icon" (click)="saveChanges()">
+  <button (click)="saveChanges()">
     save
   </button>
 </ng-template>
