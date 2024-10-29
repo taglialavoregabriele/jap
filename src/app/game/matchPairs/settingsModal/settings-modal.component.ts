@@ -5,44 +5,49 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatchPairsDeck, GameSettings, GameType } from "../../../common/entities";
+import { MatSelectModule } from "@angular/material/select";
+import { StoreService } from "../../../common/store.service";
 
 
 
 //TODO template
 @Component({
-  template: `
-    <form [formGroup]="form" (ngSubmit)="submit(form)">
-      <h1 mat-dialog-title>Add file</h1>
-      <mat-dialog-content>
-        <mat-form-field>
-          <input matInput formControlName="settings" placeholder="Enter settings">
-        </mat-form-field>
-      </mat-dialog-content>
-      <mat-dialog-actions>
-        <button mat-button type="submit">Save</button>
-        <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
-      </mat-dialog-actions>
-    </form>
-  `,
+  templateUrl: "./settings-modal.component.html"
 })
 export class SettingsDialogComponent implements OnInit {
 
   form: FormGroup;
+  settings: GameSettings;
+  decks: MatchPairsDeck[] = []
 
   constructor(
     protected formBuilder: FormBuilder,
     protected dialogRef: MatDialogRef<SettingsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) protected data
+    @Inject(MAT_DIALOG_DATA) protected data,
+    protected storeService: StoreService
   ) { }
 
   ngOnInit() {
+    this.storeService.getDecks().then(decks => {
+      this.decks = decks
+    })
+
+    this.settings = this.data.settings;
     this.form = this.formBuilder.group({
-      settings: this.data.settings ? this.data.settings : ''
+      gameType: this.settings.selectedGame ?? GameType.MATCH_PAIRS,
+      selectedDeck: this.settings.selectedDeck
     })
   }
 
   submit(form) {
-    this.dialogRef.close(`${form.value.settings}`);
+    this.settings.selectedGame = form.value.gameType
+    this.settings.selectedDeck = form.value.selectedDeck
+    this.dialogRef.close(this.settings);
+  }
+
+  get GameType(): typeof GameType {
+    return GameType
   }
 }
 
@@ -59,10 +64,9 @@ export class SettingsDialogComponent implements OnInit {
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    MatSelectModule,
     ReactiveFormsModule
   ],
   exports: [SettingsDialogComponent]
 })
 export class SettingsDialogModule { }
-
-

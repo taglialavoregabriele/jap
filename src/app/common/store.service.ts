@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Deck } from './entities';
+import { MatchPairsDeck } from './entities';
 import PouchDB from "pouchdb"
 
 //TODO see if pouchDB is a viable option...
@@ -16,14 +16,14 @@ export class StoreService {
     this.decksDB = new PouchDB("decks");
   }
 
-  getDecks(): Promise<Deck[]> {
+  getDecks(): Promise<MatchPairsDeck[]> {
     let decks = this.decksDB.allDocs({ include_docs: true }).then(docs => {
-      return docs.rows.map(d => (d.doc! as unknown) as Deck)
+      return docs.rows.map(d => (d.doc! as unknown) as MatchPairsDeck)
     })
     return decks;
   }
 
-  setDecks(decks: Deck[]) {
+  setDecks(decks: MatchPairsDeck[]) {
     for (let i = 0; i < decks.length; i++) {
       this.decksDB.allDocs({ include_docs: true }).then(docs => {
         let existingDeck = docs.rows.find((row) => row.doc!._id == decks[i]._id)

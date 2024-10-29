@@ -6,8 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { Card, Deck } from '../common/entities';
-import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { MatchPairsCard, MatchPairsDeck } from '../common/entities';
+import { FormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -20,6 +20,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { AddDeckDialogComponent, AddDeckDialogModule } from './addDecksModal/add-decks-dialog';
 import { filter } from 'rxjs';
+import { getLastId } from '../common/utils';
 
 @Component({
   selector: 'app-edit-decks',
@@ -37,7 +38,6 @@ import { filter } from 'rxjs';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
@@ -46,23 +46,23 @@ import { filter } from 'rxjs';
   ]
 })
 export class EditDecksComponent implements OnInit {
-  decks: Deck[] = [] //TODO deal with null
+  decks: MatchPairsDeck[] = [] //TODO deal with null
   @Optional() @Inject(MAT_DIALOG_DATA) data: any = { name: "" }
   addDeckModalRef: MatDialogRef<AddDeckDialogComponent>;
 
-  selectedDeck: Deck = {
+  selectedDeck: MatchPairsDeck = {
     _id: "-1",
     name: "",
     cards: []
   }
 
-  newCard: Card = {
+  newCard: MatchPairsCard = {
     _id: "-1",
     originalSentence: '',
     translation: ''
   }
 
-  newDeck: Deck = {
+  newDeck: MatchPairsDeck = {
     _id: "-1",
     name: "",
     cards: []
@@ -85,7 +85,7 @@ export class EditDecksComponent implements OnInit {
 
   addCard() {
     if (!this.selectedDeck) return
-    this.newCard!._id = this.getLastDeckCardId(this.selectedDeck!)
+    this.newCard!._id = getLastId(this.selectedDeck!.cards)
     this.selectedDeck!.cards.push(this.newCard!)
     this.newCard = {
       _id: "0",
@@ -117,7 +117,7 @@ export class EditDecksComponent implements OnInit {
           this.decks[index].name = name;
         }
       } else {
-        this.decks.push({ _id: this.getLastDeckId(), name, cards: [] });
+        this.decks.push({ _id: getLastId(this.decks), name, cards: [] });
       }
     });
   }
@@ -130,13 +130,5 @@ export class EditDecksComponent implements OnInit {
   saveChanges() {
     console.log(this.decks)
     this.storeService.setDecks(this.decks)
-  }
-
-  private getLastDeckCardId(deck: Deck): string {
-    return Math.max(...deck.cards.map(o => Number(o._id))) + 1 + ''
-  }
-
-  private getLastDeckId(): string {
-    return Math.max(...this.decks.map(o => Number(o._id))) + 1 + ''
   }
 }

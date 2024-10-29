@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { EditDecksComponent } from "./edit-decks/edit-decks.component";
-import { GameComponent } from "./game/game.component";
+import { MatchPairsComponent } from "./game/matchPairs/match-pairs.component";
 import { SettingsComponent } from "./settings/settings.component";
 
 export const routes: Routes = [
@@ -9,7 +9,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'game',
-        component: GameComponent
+        children: [
+          {
+            path: 'matchpairs',
+            component: MatchPairsComponent
+          }
+
+        ]
       },
       {
         path: 'settings',

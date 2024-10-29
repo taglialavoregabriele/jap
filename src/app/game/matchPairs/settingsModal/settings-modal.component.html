@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="submit(form)">
+  <h1 mat-dialog-title>Game settings</h1>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Select game</mat-label>
+      <mat-select formControlName="gameType">
+        <mat-option [value]="GameType.MATCH_PAIRS">Match pairs</mat-option>
+        <mat-option [value]="GameType.WORD_TYPE">Word type</mat-option>
+        <mat-option [value]="GameType.NOT_IMPLEMENTED">WIP</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!--Match pair section-->
+    <mat-form-field *ngIf="form.value.gameType == GameType.MATCH_PAIRS">
+      <mat-label>Select deck</mat-label>
+      <mat-select formControlName="selectedDeck">
+        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- WIP section-->
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button type="submit">Save</button>
+    <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+  </mat-dialog-actions>
+</form>

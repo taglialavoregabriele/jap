@@ -1,4 +1,24 @@
-<button (click)="goToGame()">game</button>
-<button (click)="goToEditDecks()">decks</button>
-<button (click)="goToSettings()">settings</button>
-<router-outlet />
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <button mat-button type="button" (click)="showFillerGames = !showFillerGames">game</button>
+    @if (showFillerGames) {
+    <button mat-button type="button" (click)="goToGame()">Match pairs</button>
+    <button mat-button type="button" (click)="goToGame()">Word type</button>
+    <button mat-button type="button" (click)="goToGame()">WIP</button>
+    }
+    <button mat-button type="button" (click)="showFillerDecks = !showFillerDecks">decks</button>
+    @if (showFillerDecks) {
+    <button mat-button type="button" (click)="goToEditDecks()">Match pairs</button>
+    <button mat-button type="button" (click)="goToEditDecks()">Word type</button>
+    <button mat-button type="button" (click)="goToEditDecks()">WIP</button>
+    }
+    <button mat-button type="button" (click)="goToSettings()">settings</button>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+    <router-outlet />
+  </div>
+</mat-drawer-container>

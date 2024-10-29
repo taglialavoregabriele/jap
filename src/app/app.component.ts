@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router, RouterOutlet } from '@angular/router';
 
 
@@ -10,9 +12,14 @@ import { Router, RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [
     RouterOutlet,
+    MatButtonModule,
+    MatSidenavModule,
   ],
 })
 export class AppComponent {
+
+  showFillerGames: boolean = false;
+  showFillerDecks: boolean = false;
 
   constructor(
     protected router: Router,
@@ -20,7 +27,7 @@ export class AppComponent {
   }
 
   goToGame() {
-    this.router.navigateByUrl('/game')
+    this.router.navigateByUrl('/game/matchpairs')
   }
   goToEditDecks() {
     this.router.navigateByUrl('/editDecks')

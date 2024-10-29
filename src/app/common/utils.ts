@@ -1,3 +1,5 @@
+import { IdEntity } from "./entities";
+
 export function shuffle(array: any[]): any[] {
   let currentIndex = array.length;
 
@@ -13,4 +15,8 @@ export function shuffle(array: any[]): any[] {
       array[randomIndex], array[currentIndex]];
   }
   return array
+}
+
+export function getLastId(list: IdEntity[]): string {
+  return list.length == 0 ? '0' : Math.max(...list.map(o => Number(o._id))) + 1 + ''
 }

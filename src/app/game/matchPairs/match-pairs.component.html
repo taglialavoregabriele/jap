@@ -13,13 +13,15 @@
   <div *ngIf="selectedDeck">
     <!-- make function for random selection in case they're more than needed-->
     <div *ngFor="let card of selectedDeck.cards">
-      <button mat-button (click)="clickOriginal(card)">
+      <button mat-button type="button" (click)="clickCard(card, true)"
+        [ngClass]="{clicked: card.clickedOriginal, guessed: card.guessed}" [disabled]="card.guessed">
         {{card.originalSentence}}
       </button>
     </div>
     <br>
-    <div *ngFor="let card of shuffleDeck(selectedDeck.cards)">
-      <button mat-button (click)="clickTranslation(card)">
+    <div *ngFor="let card of shuffledCards">
+      <button mat-button type="button" (click)="clickCard(card, false)"
+        [ngClass]=" {clicked: card.clickedTranslation, guessed:card.guessed}" [disabled]="card.guessed">
         {{card.translation}}
       </button>
     </div>
