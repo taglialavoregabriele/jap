@@ -1,4 +1,4 @@
-import { StoreService } from './../common/store.service';
+import { StoreService } from '../../common/store.service';
 import { Component, Inject, inject, model, OnInit, Optional, TemplateRef, ViewRef } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { MatchPairsCard, MatchPairsDeck } from '../common/entities';
+import { MatchPairsCard, MatchPairsDeck } from '../../common/entities';
 import { FormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -18,14 +18,13 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-import { AddDeckDialogComponent, AddDeckDialogModule } from './addDecksModal/add-decks-dialog';
+import { AddDeckDialogComponent, AddDeckDialogModule } from '../addDeckModal/add-deck-dialog';
 import { filter } from 'rxjs';
-import { getLastId } from '../common/utils';
+import { getLastId } from '../../common/utils';
 
 @Component({
-  selector: 'app-edit-decks',
-  templateUrl: './edit-decks.component.html',
-  styleUrl: './edit-decks.component.scss',
+  templateUrl: './match-pairs.component.html',
+  styleUrl: './match-pairs.component.scss',
   standalone: true,
   imports: [
     RouterModule,
@@ -45,7 +44,7 @@ import { getLastId } from '../common/utils';
     AddDeckDialogModule
   ]
 })
-export class EditDecksComponent implements OnInit {
+export class EditMatchPairDecksComponent implements OnInit {
   decks: MatchPairsDeck[] = [] //TODO deal with null
   @Optional() @Inject(MAT_DIALOG_DATA) data: any = { name: "" }
   addDeckModalRef: MatDialogRef<AddDeckDialogComponent>;
@@ -72,7 +71,7 @@ export class EditDecksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.storeService.getDecks().then(decks => {
+    this.storeService.getMatchPairsDecks().then(decks => {
       this.decks = decks
       this.selectedDeck = this.decks[0]
     })
@@ -129,6 +128,6 @@ export class EditDecksComponent implements OnInit {
 
   saveChanges() {
     console.log(this.decks)
-    this.storeService.setDecks(this.decks)
+    this.storeService.setMatchPairsDeck(this.decks)
   }
 }

@@ -5,7 +5,7 @@ import { MatchPairsDeck, GameSettings } from '../../common/entities';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SettingsDialogComponent, SettingsDialogModule } from './settingsModal/settings-modal.component';
+import { SettingsDialogComponent, SettingsDialogModule } from '../settingsModal/settings-modal.component';
 import { CommonModule } from '@angular/common';
 import { shuffle } from '../../common/utils';
 
@@ -21,7 +21,7 @@ import { shuffle } from '../../common/utils';
     SettingsDialogModule
   ]
 })
-export class MatchPairsComponent implements OnInit {
+export class MatchPairsGameComponent implements OnInit {
   settingsModalRef: MatDialogRef<SettingsDialogComponent>
   settings: GameSettings = { selectedGame: GameType.MATCH_PAIRS }
 

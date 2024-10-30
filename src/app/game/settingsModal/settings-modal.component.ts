@@ -5,13 +5,13 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { MatchPairsDeck, GameSettings, GameType } from "../../../common/entities";
+import { MatchPairsDeck, GameSettings, GameType } from "../../common/entities";
 import { MatSelectModule } from "@angular/material/select";
-import { StoreService } from "../../../common/store.service";
+import { StoreService } from "../../common/store.service";
 
 
 
-//TODO template
+//TODO template, make it work for the 3 different games
 @Component({
   templateUrl: "./settings-modal.component.html"
 })
@@ -29,7 +29,7 @@ export class SettingsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.storeService.getDecks().then(decks => {
+    this.storeService.getMatchPairsDecks().then(decks => {
       this.decks = decks
     })
 

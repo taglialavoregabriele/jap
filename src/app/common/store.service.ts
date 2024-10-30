@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatchPairsDeck } from './entities';
+import { GameType, MatchPairsDeck, WordTypeDeck } from './entities';
 import PouchDB from "pouchdb"
 
 //TODO see if pouchDB is a viable option...
@@ -10,41 +10,62 @@ import PouchDB from "pouchdb"
 })
 export class StoreService {
 
-  decksDB: PouchDB.Database;
+  matchPairsDB: PouchDB.Database;
+  wordTypeDB: PouchDB.Database;
 
   constructor() {
-    this.decksDB = new PouchDB("decks");
+    this.matchPairsDB = new PouchDB("matchPairs");
+    this.wordTypeDB = new PouchDB("wordType")
   }
 
-  getDecks(): Promise<MatchPairsDeck[]> {
-    let decks = this.decksDB.allDocs({ include_docs: true }).then(docs => {
+  getMatchPairsDecks(): Promise<MatchPairsDeck[]> {
+    return this.matchPairsDB.allDocs({ include_docs: true }).then(docs => {
       return docs.rows.map(d => (d.doc! as unknown) as MatchPairsDeck)
     })
-    return decks;
   }
 
-  setDecks(decks: MatchPairsDeck[]) {
+  setMatchPairsDeck(decks: MatchPairsDeck[]) {
+    this.setDecks(decks, GameType.MATCH_PAIRS)
+  }
+
+  getWordTypeDecks(): Promise<WordTypeDeck[]> {
+    return this.wordTypeDB.allDocs({ include_docs: true }).then(docs => {
+      return docs.rows.map(d => (d.doc! as unknown) as WordTypeDeck)
+    })
+  }
+
+  setWordTypeDeck(decks: WordTypeDeck[]) {
+    this.setDecks(decks, GameType.MATCH_PAIRS)
+  }
+
+  private setDecks(decks: MatchPairsDeck[] | WordTypeDeck[], gameType: GameType) {
+    let db = null
+
+    if (gameType == GameType.MATCH_PAIRS) db = this.matchPairsDB
+    else if (gameType == GameType.WORD_TYPE) db = this.wordTypeDB
+    else return;
+
     for (let i = 0; i < decks.length; i++) {
-      this.decksDB.allDocs({ include_docs: true }).then(docs => {
+      db.allDocs({ include_docs: true }).then(docs => {
         let existingDeck = docs.rows.find((row) => row.doc!._id == decks[i]._id)
         if (existingDeck) {
           //update existing ones
-          this.decksDB.get(existingDeck.id).then(doc => {
+          db.get(existingDeck.id).then(doc => {
             let app = decks[i] as any
             app._rev = doc._rev
             app._id = doc._id
-            this.decksDB.put(app)
+            db.put(app)
           })
         } else {
           //save new ones
-          this.decksDB.put(decks[i])
+          db.put(decks[i])
         }
       })
     }
     //TODO do it properly
-    this.decksDB.allDocs({ include_docs: true }).then(docs => {
+    db.allDocs({ include_docs: true }).then(docs => {
       docs.rows.forEach(i => {
-        if (!decks.find(j => j._id == i.doc?._id)) this.decksDB.remove(i.doc!)
+        if (!decks.find(j => j._id == i.doc?._id)) this.matchPairsDB.remove(i.doc!)
       })
     })
   }
