@@ -36,6 +36,6 @@ export enum GameType {
 }
 export interface GameSettings {
   selectedGame: GameType
-  selectedDeck?: MatchPairsDeck
+  selectedDeck?: MatchPairsDeck | WordTypeDeck
 }
 

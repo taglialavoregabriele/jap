@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { WordTypeCard, WordTypeDeck } from '../../common/entities';
+import { WordTypeCard, WordTypeDeck, WordTypeOption } from '../../common/entities';
 import { FormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -56,10 +56,10 @@ export class EditWordTypeDeckComponent implements OnInit {
     cards: []
   }
 
-  newCard: WordTypeCard = {
-    _id: "-1",
-    word: '',
-    options: []
+  newOption: WordTypeOption = {
+    _id: '-1',
+    name: '',
+    correct: false,
   }
 
   newDeck: WordTypeDeck = {
@@ -78,6 +78,18 @@ export class EditWordTypeDeckComponent implements OnInit {
     })
   }
 
+  deleteOption(card: WordTypeCard, id: string) {
+    card.options.splice(card.options.findIndex(i => i._id == id), 1);
+  }
+
+  addOption(card: WordTypeCard) {
+    card.options.push({
+      _id: getLastId(card.options),
+      name: '',
+      correct: false,
+    })
+  }
+
   //TODO add confirm window
   deleteCard(i: number) {
     this.selectedDeck!.cards.splice(i, 1)
@@ -85,13 +97,15 @@ export class EditWordTypeDeckComponent implements OnInit {
 
   addCard() {
     if (!this.selectedDeck) return
-    this.newCard!._id = getLastId(this.selectedDeck!.cards)
-    this.selectedDeck!.cards.push(this.newCard!)
-    this.newCard = {
-      _id: "0",
+    this.selectedDeck!.cards.push({
+      _id: getLastId(this.selectedDeck!.cards),
       word: "",
-      options: []
-    }
+      options: [{
+        _id: "0",
+        name: '',
+        correct: true,
+      }]
+    })
   }
 
   addDeck() {

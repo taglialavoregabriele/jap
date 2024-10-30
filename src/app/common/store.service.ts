@@ -65,7 +65,7 @@ export class StoreService {
     //TODO do it properly
     db.allDocs({ include_docs: true }).then(docs => {
       docs.rows.forEach(i => {
-        if (!decks.find(j => j._id == i.doc?._id)) this.matchPairsDB.remove(i.doc!)
+        if (!decks.find(j => j._id == i.doc?._id)) db.remove(i.doc!)
       })
     })
   }

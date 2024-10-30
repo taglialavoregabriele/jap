@@ -5,7 +5,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { MatchPairsDeck, GameSettings, GameType } from "../../common/entities";
+import { MatchPairsDeck, GameSettings, GameType, WordTypeDeck } from "../../common/entities";
 import { MatSelectModule } from "@angular/material/select";
 import { StoreService } from "../../common/store.service";
 
@@ -19,7 +19,8 @@ export class SettingsDialogComponent implements OnInit {
 
   form: FormGroup;
   settings: GameSettings;
-  decks: MatchPairsDeck[] = []
+  matchPairsDecks: MatchPairsDeck[] = []
+  wordTypeDecks: WordTypeDeck[] = []
 
   constructor(
     protected formBuilder: FormBuilder,
@@ -29,8 +30,11 @@ export class SettingsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.storeService.getMatchPairsDecks().then(decks => {
-      this.decks = decks
+    if (this.settings.selectedGame == GameType.MATCH_PAIRS) this.storeService.getMatchPairsDecks().then(decks => {
+      this.matchPairsDecks = decks
+    })
+    else if (this.settings.selectedGame == GameType.WORD_TYPE) this.storeService.getWordTypeDecks().then(decks => {
+      this.wordTypeDecks = decks
     })
 
     this.settings = this.data.settings;

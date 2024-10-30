@@ -6,7 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { MatchPairsCard, MatchPairsDeck } from '../../common/entities';
+import { MatchPairsDeck } from '../../common/entities';
 import { FormsModule } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -55,12 +55,6 @@ export class EditMatchPairDecksComponent implements OnInit {
     cards: []
   }
 
-  newCard: MatchPairsCard = {
-    _id: "-1",
-    originalSentence: '',
-    translation: ''
-  }
-
   newDeck: MatchPairsDeck = {
     _id: "-1",
     name: "",
@@ -84,13 +78,11 @@ export class EditMatchPairDecksComponent implements OnInit {
 
   addCard() {
     if (!this.selectedDeck) return
-    this.newCard!._id = getLastId(this.selectedDeck!.cards)
-    this.selectedDeck!.cards.push(this.newCard!)
-    this.newCard = {
-      _id: "0",
+    this.selectedDeck!.cards.push({
+      _id: getLastId(this.selectedDeck!.cards),
       originalSentence: '',
       translation: ''
-    }
+    })
   }
 
   addDeck() {

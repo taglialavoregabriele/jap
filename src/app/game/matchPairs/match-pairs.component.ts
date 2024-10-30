@@ -25,8 +25,6 @@ export class MatchPairsGameComponent implements OnInit {
   settingsModalRef: MatDialogRef<SettingsDialogComponent>
   settings: GameSettings = { selectedGame: GameType.MATCH_PAIRS }
 
-  ////Match pair section
-
   selectedDeck: MatchPairsDeck
   clickedCard: MatchPairsCard;
   shuffledCards: MatchPairsCard[];
@@ -44,12 +42,11 @@ export class MatchPairsGameComponent implements OnInit {
 
     this.settingsModalRef.afterClosed().subscribe(settings => {
       this.settings = settings
-      this.selectedDeck = this.settings.selectedDeck;
+      this.selectedDeck = this.settings.selectedDeck as MatchPairsDeck;
       this.shuffledCards = this.shuffleDeck(this.selectedDeck.cards.slice());
     })
   }
 
-  //Match pair section
   clickCard(card: MatchPairsCard, isOriginalSentence: boolean) {
     //TODO check conditions, bug if you click more than once on same button type
     if (!this.clickedCard || this.clickedCard.clickedOriginal && isOriginalSentence || this.clickedCard.clickedTranslation && !isOriginalSentence) {

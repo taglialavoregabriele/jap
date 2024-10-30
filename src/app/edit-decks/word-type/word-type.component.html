@@ -24,13 +24,19 @@
       <div *ngFor="let card of selectedDeck!.cards; let i = index">
         <mat-form-field appearance="outline">
           <mat-label>Outline form field</mat-label>
-          <input matInput placeholder="Placeholder" [value]="selectedDeck.cards[i].word"
-            [(ngModel)]="selectedDeck.cards[i].word">
+          <input matInput placeholder="Placeholder" [value]="card.word" [(ngModel)]="card.word">
         </mat-form-field>
-        <mat-form-field appearance="outline" *ngFor="let option of selectedDeck.cards[i].options">
-          <mat-label>Outline form field</mat-label>
+        <mat-form-field appearance="outline" *ngFor="let option of card.options">
+          <mat-label *ngIf="!option.correct">Wrong one</mat-label>
+          <mat-label *ngIf="option.correct">Right one</mat-label>
           <input matInput placeholder="Placeholder" [value]="option.name" [(ngModel)]="option.name">
+          <button mat-mini-fab (click)="deleteOption(card, option._id)" *ngIf="!option.correct">
+            <mat-icon>close</mat-icon>
+          </button>
         </mat-form-field>
+        <button mat-mini-fab (click)="addOption(card)">
+          <mat-icon>add</mat-icon>
+        </button>
         <button mat-mini-fab (click)="deleteCard(i)">
           <mat-icon>close</mat-icon>
         </button>

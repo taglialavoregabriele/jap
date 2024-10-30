@@ -3,9 +3,8 @@
   <mat-icon>edit</mat-icon>
 </button>
 
-<div *ngIf="settings.selectedGame == GameType.MATCH_PAIRS">
-  <ng-container *ngTemplateOutlet="matchPairs"></ng-container>
-</div>
+<ng-container *ngTemplateOutlet="matchPairs"></ng-container>
+
 
 <!-- TODO css...-->
 <ng-template #matchPairs>

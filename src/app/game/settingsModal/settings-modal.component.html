@@ -14,7 +14,7 @@
     <mat-form-field *ngIf="form.value.gameType == GameType.MATCH_PAIRS">
       <mat-label>Select deck</mat-label>
       <mat-select formControlName="selectedDeck">
-        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+        <mat-option *ngFor="let deck of matchPairsDecks" [value]="deck">{{deck.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     <!-- WIP section-->
