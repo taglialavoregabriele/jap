@@ -1,1 +1,48 @@
-<p>word-type works!</p>
+<ng-container *ngTemplateOutlet="editDeckSection"></ng-container>
+
+<ng-template #editDeckSection>
+  <p>
+    <mat-form-field>
+      <mat-label>Select deck</mat-label>
+      <mat-select [(ngModel)]="selectedDeck">
+        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- add edit button and pass current deck-->
+    <button mat-mini-fab (click)="addDeckOpenModal(true)">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="addDeckOpenModal(false)">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-mini-fab (click)="deleteDeck()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </p>
+  <div *ngIf="selectedDeck"> <!-- TODO fix interface for new card -->
+    <div>
+      <div *ngFor="let card of selectedDeck!.cards; let i = index">
+        <mat-form-field appearance="outline">
+          <mat-label>Outline form field</mat-label>
+          <input matInput placeholder="Placeholder" [value]="selectedDeck.cards[i].word"
+            [(ngModel)]="selectedDeck.cards[i].word">
+        </mat-form-field>
+        <mat-form-field appearance="outline" *ngFor="let option of selectedDeck.cards[i].options">
+          <mat-label>Outline form field</mat-label>
+          <input matInput placeholder="Placeholder" [value]="option.name" [(ngModel)]="option.name">
+        </mat-form-field>
+        <button mat-mini-fab (click)="deleteCard(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </div>
+    <p>
+      <button mat-mini-fab (click)="addCard()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </p>
+  </div>
+  <button (click)="saveChanges()">
+    save
+  </button>
+</ng-template>

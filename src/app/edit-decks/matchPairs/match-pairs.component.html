@@ -38,16 +38,6 @@
       </div>
     </div>
     <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Original</mat-label>
-        <input matInput placeholder="Placeholder" [value]="newCard.originalSentence"
-          [(ngModel)]="newCard.originalSentence">
-        <!-- <mat-hint>Hint</mat-hint> -->
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Translation</mat-label>
-        <input matInput placeholder="Placeholder" [value]="newCard.translation" [(ngModel)]="newCard.translation">
-      </mat-form-field>
       <button mat-mini-fab (click)="addCard()">
         <mat-icon>add</mat-icon>
       </button>

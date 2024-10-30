@@ -35,7 +35,7 @@ export class StoreService {
   }
 
   setWordTypeDeck(decks: WordTypeDeck[]) {
-    this.setDecks(decks, GameType.MATCH_PAIRS)
+    this.setDecks(decks, GameType.WORD_TYPE)
   }
 
   private setDecks(decks: MatchPairsDeck[] | WordTypeDeck[], gameType: GameType) {

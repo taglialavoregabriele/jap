@@ -15,17 +15,17 @@ export interface MatchPairsDeck extends IdEntity {
   cards: MatchPairsCard[]
 }
 
-export interface WordType extends IdEntity {
-  type: string,
+export interface WordTypeOption extends IdEntity {
+  name: string,
+  correct: boolean
 }
 export interface WordTypeCard extends IdEntity {
   word: string,
-  wordType: WordType
+  options: WordTypeOption[]
 }
 
 export interface WordTypeDeck extends IdEntity {
   name: string,
-  wordTypes: WordType[]
   cards: WordTypeCard[]
 }
 
