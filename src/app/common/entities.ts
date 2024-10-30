@@ -20,7 +20,7 @@ export interface WordTypeOption extends IdEntity {
   correct: boolean
 }
 export interface WordTypeCard extends IdEntity {
-  word: string,
+  name: string,
   options: WordTypeOption[]
 }
 
@@ -39,3 +39,7 @@ export interface GameSettings {
   selectedDeck?: MatchPairsDeck | WordTypeDeck
 }
 
+export interface ExportJson {
+  matchPairsDecks: MatchPairsDeck[],
+  wordTypeDecks: WordTypeDeck[]
+}

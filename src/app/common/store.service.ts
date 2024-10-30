@@ -20,7 +20,10 @@ export class StoreService {
 
   getMatchPairsDecks(): Promise<MatchPairsDeck[]> {
     return this.matchPairsDB.allDocs({ include_docs: true }).then(docs => {
-      return docs.rows.map(d => (d.doc! as unknown) as MatchPairsDeck)
+      return docs.rows.map(d => {
+        d.doc._rev = undefined
+        return (d.doc! as unknown) as MatchPairsDeck
+      })
     })
   }
 
@@ -30,7 +33,10 @@ export class StoreService {
 
   getWordTypeDecks(): Promise<WordTypeDeck[]> {
     return this.wordTypeDB.allDocs({ include_docs: true }).then(docs => {
-      return docs.rows.map(d => (d.doc! as unknown) as WordTypeDeck)
+      return docs.rows.map(d => {
+        d.doc._rev = undefined
+        return (d.doc! as unknown) as WordTypeDeck
+      })
     })
   }
 

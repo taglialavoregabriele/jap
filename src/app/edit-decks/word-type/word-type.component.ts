@@ -99,7 +99,7 @@ export class EditWordTypeDeckComponent implements OnInit {
     if (!this.selectedDeck) return
     this.selectedDeck!.cards.push({
       _id: getLastId(this.selectedDeck!.cards),
-      word: "",
+      name: "",
       options: [{
         _id: "0",
         name: '',

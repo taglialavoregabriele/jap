@@ -30,6 +30,7 @@ export class SettingsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.settings = this.data.settings;
     if (this.settings.selectedGame == GameType.MATCH_PAIRS) this.storeService.getMatchPairsDecks().then(decks => {
       this.matchPairsDecks = decks
     })
@@ -37,7 +38,6 @@ export class SettingsDialogComponent implements OnInit {
       this.wordTypeDecks = decks
     })
 
-    this.settings = this.data.settings;
     this.form = this.formBuilder.group({
       gameType: this.settings.selectedGame ?? GameType.MATCH_PAIRS,
       selectedDeck: this.settings.selectedDeck

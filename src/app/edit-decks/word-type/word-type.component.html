@@ -24,7 +24,7 @@
       <div *ngFor="let card of selectedDeck!.cards; let i = index">
         <mat-form-field appearance="outline">
           <mat-label>Outline form field</mat-label>
-          <input matInput placeholder="Placeholder" [value]="card.word" [(ngModel)]="card.word">
+          <input matInput placeholder="Placeholder" [value]="card.name" [(ngModel)]="card.name">
         </mat-form-field>
         <mat-form-field appearance="outline" *ngFor="let option of card.options">
           <mat-label *ngIf="!option.correct">Wrong one</mat-label>

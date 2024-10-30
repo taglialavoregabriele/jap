@@ -6,5 +6,11 @@
 <ng-container *ngTemplateOutlet="wordType"></ng-container>
 
 <ng-template #wordType>
-
+  <div *ngIf="!gameEnded && selectedDeck">
+    <mat-chip>{{shuffledCards[0].name}}</mat-chip>
+    <br>
+    <mat-chip *ngFor="let option of shuffledCards[0].options"
+      (click)="clickOption(option.correct)">{{option.name}}</mat-chip>
+  </div>
+  <div *ngIf="gameEnded">Congratulations</div>
 </ng-template>
