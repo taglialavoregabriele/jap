@@ -30,10 +30,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
   ]
 })
 export class MatchPairsGameComponent implements OnInit {
-  decks: MatchPairsDeck[]
-  selectedDeck: MatchPairsDeck
+  decks: MatchPairsDeck[];
+  selectedDeck: MatchPairsDeck;
   clickedCard: MatchPairsCard;
   shuffledCards: MatchPairsCard[];
+  gameWon: boolean;
 
   form: FormGroup;
 
@@ -71,11 +72,18 @@ export class MatchPairsGameComponent implements OnInit {
         //lives system?
       }
     }
+    this.gameWon = this.selectedDeck!.cards.findIndex(c => !c.guessed) == -1
+    console.log(this.gameWon)
   }
 
   submit(form) {
     this.selectedDeck = form.value.selectedDeck
     this.shuffledCards = this.shuffleDeck(this.selectedDeck.cards.slice());
+  }
+
+  resetGame() {
+    this.selectedDeck = null;
+    this.gameWon = false;
   }
 
   shuffleDeck(cards: MatchPairsCard[]): MatchPairsCard[] {

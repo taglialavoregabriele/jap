@@ -9,8 +9,10 @@
     <button mat-button type="submit">Start game</button>
   </form>
 </div>
+<button *ngIf="selectedDeck" mat-icon-button (click)="resetGame()" class="reset-game">
+  <mat-icon>close</mat-icon>
+</button>
 <div *ngIf="selectedDeck" class="main-container">
-  <!-- make function for random selection in case they're more than needed-->
   <div class="original-cards">
     <div *ngFor="let card of selectedDeck.cards">
       <button mat-raised-button type="button" (click)="clickCard(card, true)"
