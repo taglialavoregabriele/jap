@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   standalone: true,
@@ -16,33 +19,33 @@ import { MatChipsModule } from '@angular/material/chips';
     MatButtonModule,
     CommonModule,
     SettingsDialogModule,
-    MatChipsModule
+    MatChipsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './word-type.component.html',
   styleUrl: './word-type.component.scss'
 })
 export class WordTypeGameComponent implements OnInit {
+  form: FormGroup;
+  decks: WordTypeDeck[]
   selectedDeck: WordTypeDeck
   shuffledCards: WordTypeCard[]
   settingsModalRef: MatDialogRef<SettingsDialogComponent>
   settings: GameSettings = { selectedGame: GameType.WORD_TYPE }
   gameEnded: boolean
 
-  constructor(protected storeService: StoreService, protected dialog: MatDialog) { }
+  constructor(protected storeService: StoreService, protected formBuilder: FormBuilder) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.storeService.getWordTypeDecks().then(decks => {
+      this.decks = decks
+    })
 
-  openSettings() {
-    this.settingsModalRef = this.dialog.open(SettingsDialogComponent, {
-      data: {
-        settings: this.settings ? this.settings : {} as GameSettings,
-      }
-    });
-
-    this.settingsModalRef.afterClosed().subscribe(settings => {
-      this.settings = settings
-      this.selectedDeck = this.settings.selectedDeck as WordTypeDeck;
-      this.shuffledCards = shuffle(this.selectedDeck.cards.slice());
+    this.form = this.formBuilder.group({
+      selectedDeck: this.selectedDeck
     })
   }
 
@@ -54,9 +57,22 @@ export class WordTypeGameComponent implements OnInit {
     if (correct) {
       this.shuffledCards.splice(0, 1)
       this.gameEnded = this.shuffledCards.length == 0
-      //TODO right animation
+      if (this.gameEnded) {
+        //TODO right animation
+        this.selectedDeck = null
+      }
     } else {
       //TODO wrong animation
     }
+  }
+
+  submit(form) {
+    this.selectedDeck = form.value.selectedDeck
+    this.shuffledCards = shuffle(this.selectedDeck.cards.slice());
+  }
+
+  resetGame() {
+    this.selectedDeck = null
+    this.gameEnded = false
   }
 }
