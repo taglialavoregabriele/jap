@@ -1,23 +1,39 @@
-<mat-drawer-container class="example-container" autosize>
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <button mat-button type="button" (click)="showFillerGames = !showFillerGames">game</button>
-    @if (showFillerGames) {
-    <button mat-button type="button" (click)="goToGame(GameType.MATCH_PAIRS)">Match pairs</button>
-    <button mat-button type="button" (click)="goToGame(GameType.WORD_TYPE)">Word type</button>
-    <button mat-button type="button" (click)="goToGame(GameType.NOT_IMPLEMENTED)">WIP</button>
-    }
-    <button mat-button type="button" (click)="showFillerDecks = !showFillerDecks">decks</button>
-    @if (showFillerDecks) {
-    <button mat-button type="button" (click)="goToEditDecks(GameType.MATCH_PAIRS)">Match pairs</button>
-    <button mat-button type="button" (click)="goToEditDecks(GameType.WORD_TYPE)">Word type</button>
-    <button mat-button type="button" (click)="goToEditDecks(GameType.NOT_IMPLEMENTED)">WIP</button>
-    }
-    <button mat-button type="button" (click)="goToSettings()">settings</button>
+<mat-drawer-container class="container">
+  <mat-drawer #drawer class="sidenav" mode="side">
+    <div class="menu">
+      <button mat-button type="button" (click)="showFillerGames = !showFillerGames" class="menu-item">
+        game
+        <mat-icon class="expand-menu-arrow" *ngIf="showFillerGames">add</mat-icon>
+        <mat-icon class="expand-menu-arrow" *ngIf="!showFillerGames">menu</mat-icon>
+      </button>
+      @if (showFillerGames) {
+      <button mat-button type="button" (click)="goToGame(GameType.MATCH_PAIRS)" class="menu-item-2">Match
+        pairs</button>
+      <button mat-button type="button" (click)="goToGame(GameType.WORD_TYPE)" class="menu-item-2">Word type</button>
+      <button mat-button type="button" (click)="goToGame(GameType.NOT_IMPLEMENTED)" class="menu-item-2">WIP</button>
+      }
+      <button mat-button type="button" (click)="showFillerDecks = !showFillerDecks" class="menu-item">
+        decks
+        <mat-icon class="expand-menu-arrow" *ngIf="showFillerDecks">add</mat-icon>
+        <mat-icon class="expand-menu-arrow" *ngIf="!showFillerDecks">menu</mat-icon>
+      </button>
+      @if (showFillerDecks) {
+      <button mat-button type="button" (click)="goToEditDecks(GameType.MATCH_PAIRS)" class="menu-item-2">Match
+        pairs</button>
+      <button mat-button type="button" (click)="goToEditDecks(GameType.WORD_TYPE)" class="menu-item-2">Word
+        type</button>
+      <button mat-button type="button" (click)="goToEditDecks(GameType.NOT_IMPLEMENTED)"
+        class="menu-item-2">WIP</button>
+      }
+      <button mat-button type="button" (click)="goToSettings()" class="menu-item">
+        settings
+      </button>
+    </div>
   </mat-drawer>
 
-  <div class="example-sidenav-content">
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
+  <div class="sidenav-content">
+    <button type="button" mat-mini-fab (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
     </button>
     <router-outlet />
   </div>

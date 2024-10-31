@@ -1,2 +1,5 @@
 <button mat-button (click)="export()">export</button>
-<input mat-button type="file" class="file-upload" (change)="import($event)">
+<button mat-button>
+  import
+  <input type="file" class="file-upload" (change)="import($event)">
+</button>

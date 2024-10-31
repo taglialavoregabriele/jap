@@ -5,3 +5,25 @@
 .guessed {
   background-color: greenyellow;
 }
+
+.main-container {
+  display: grid;
+  grid-template-columns: ". .";
+  grid-template-areas: "original-cards translation-cards";
+}
+
+.card {
+  min-width: 40vh;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+.settings-button {
+  margin-right: 5px;
+}
+
+/*
+.original-cards {}
+
+.translation-cards {}
+*/

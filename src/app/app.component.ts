@@ -3,6 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Router, RouterOutlet } from '@angular/router';
 import { GameType } from './common/entities';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -15,6 +17,8 @@ import { GameType } from './common/entities';
     RouterOutlet,
     MatButtonModule,
     MatSidenavModule,
+    MatIconModule,
+    CommonModule
   ],
 })
 export class AppComponent {
