@@ -8,6 +8,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SettingsDialogComponent, SettingsDialogModule } from '../settingsModal/settings-modal.component';
 import { CommonModule } from '@angular/common';
 import { shuffle } from '../../common/utils';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'match-pairs',
@@ -18,32 +22,30 @@ import { shuffle } from '../../common/utils';
     MatIconModule,
     MatButtonModule,
     CommonModule,
-    SettingsDialogModule
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class MatchPairsGameComponent implements OnInit {
-  settingsModalRef: MatDialogRef<SettingsDialogComponent>
-  settings: GameSettings = { selectedGame: GameType.MATCH_PAIRS }
-
+  decks: MatchPairsDeck[]
   selectedDeck: MatchPairsDeck
   clickedCard: MatchPairsCard;
   shuffledCards: MatchPairsCard[];
 
-  constructor(protected storeService: StoreService, protected dialog: MatDialog) { }
+  form: FormGroup;
 
-  ngOnInit(): void { }
+  constructor(protected storeService: StoreService, protected formBuilder: FormBuilder) { }
 
-  openSettings() {
-    this.settingsModalRef = this.dialog.open(SettingsDialogComponent, {
-      data: {
-        settings: this.settings ? this.settings : {} as GameSettings,
-      }
-    });
+  ngOnInit(): void {
+    this.storeService.getMatchPairsDecks().then(decks => {
+      this.decks = decks
+    })
 
-    this.settingsModalRef.afterClosed().subscribe(settings => {
-      this.settings = settings
-      this.selectedDeck = this.settings.selectedDeck as MatchPairsDeck;
-      this.shuffledCards = this.shuffleDeck(this.selectedDeck.cards.slice());
+    this.form = this.formBuilder.group({
+      selectedDeck: this.selectedDeck
     })
   }
 
@@ -69,6 +71,11 @@ export class MatchPairsGameComponent implements OnInit {
         //lives system?
       }
     }
+  }
+
+  submit(form) {
+    this.selectedDeck = form.value.selectedDeck
+    this.shuffledCards = this.shuffleDeck(this.selectedDeck.cards.slice());
   }
 
   shuffleDeck(cards: MatchPairsCard[]): MatchPairsCard[] {

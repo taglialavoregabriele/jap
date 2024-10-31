@@ -62,7 +62,6 @@ export class SettingsDialogComponent implements OnInit {
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule,
     MatButtonModule,
     MatDialogTitle,
     MatDialogContent,

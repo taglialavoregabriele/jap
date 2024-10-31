@@ -9,13 +9,13 @@
       </mat-select>
     </mat-form-field>
     <!-- add edit button and pass current deck-->
-    <button mat-mini-fab (click)="addDeckOpenModal(true)">
+    <button mat-icon-button (click)="addDeckOpenModal(true)">
       <mat-icon>add</mat-icon>
     </button>
-    <button mat-mini-fab (click)="addDeckOpenModal(false)">
+    <button mat-icon-button (click)="addDeckOpenModal(false)">
       <mat-icon>edit</mat-icon>
     </button>
-    <button mat-mini-fab (click)="deleteDeck()">
+    <button mat-icon-button (click)="deleteDeck()">
       <mat-icon>close</mat-icon>
     </button>
   </p>
@@ -32,13 +32,13 @@
           <input matInput placeholder="Placeholder" [value]="selectedDeck.cards[i].translation"
             [(ngModel)]="selectedDeck.cards[i].translation">
         </mat-form-field>
-        <button mat-mini-fab (click)="deleteCard(i)">
+        <button mat-icon-button (click)="deleteCard(i)">
           <mat-icon>close</mat-icon>
         </button>
       </div>
     </div>
     <p>
-      <button mat-mini-fab (click)="addCard()">
+      <button mat-icon-button (click)="addCard()">
         <mat-icon>add</mat-icon>
       </button>
     </p>
