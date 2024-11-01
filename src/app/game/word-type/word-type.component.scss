@@ -1,3 +1,24 @@
 .reset-game {
   float: inline-end;
 }
+
+.original-word-chip {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game-section {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: "original-word-chip option-word-chip-section";
+}
+
+.option-word-chip-section {
+  margin: 5px;
+}
+
+.option-word-chip {
+  margin: 5px;
+}

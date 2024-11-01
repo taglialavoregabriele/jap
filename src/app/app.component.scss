@@ -1,7 +1,7 @@
 .container {
-  width: 1080px;
-  height: 720px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  overflow: visible;
+  width: 100vh;
+  height: 100vh;
 }
 
 .sidenav-content {

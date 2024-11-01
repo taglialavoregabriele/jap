@@ -69,6 +69,7 @@ export class WordTypeGameComponent implements OnInit {
   submit(form) {
     this.selectedDeck = form.value.selectedDeck
     this.shuffledCards = shuffle(this.selectedDeck.cards.slice());
+    this.shuffledCards.forEach(c => c.options = shuffle(c.options))
   }
 
   resetGame() {

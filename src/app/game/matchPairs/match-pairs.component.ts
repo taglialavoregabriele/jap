@@ -77,17 +77,23 @@ export class MatchPairsGameComponent implements OnInit {
   }
 
   submit(form) {
+    this.resetDeck();
     this.selectedDeck = form.value.selectedDeck
     this.shuffledCards = this.shuffleDeck(this.selectedDeck.cards.slice());
   }
 
   resetGame() {
+    this.resetDeck()
     this.selectedDeck = null;
     this.gameWon = false;
   }
 
   shuffleDeck(cards: MatchPairsCard[]): MatchPairsCard[] {
     return shuffle(cards);
+  }
+
+  private resetDeck() {
+    if (this.selectedDeck) this.selectedDeck.cards.forEach(c => c.guessed = false)
   }
 
   get GameType(): typeof GameType {
