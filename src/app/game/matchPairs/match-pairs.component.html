@@ -1,13 +1,15 @@
 <div *ngIf="!selectedDeck">
-  <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck">
-    <mat-form-field>
-      <mat-label>Select deck</mat-label>
-      <mat-select formControlName="selectedDeck">
-        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-button type="submit">Start game</button>
-  </form>
+  <div class="start-container">
+    <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck">
+      <mat-form-field>
+        <mat-label>Select deck</mat-label>
+        <mat-select formControlName="selectedDeck">
+          <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button type="submit">Start game</button>
+    </form>
+  </div>
 </div>
 <button *ngIf="selectedDeck" mat-icon-button (click)="resetGame()" class="reset-game">
   <mat-icon>close</mat-icon>

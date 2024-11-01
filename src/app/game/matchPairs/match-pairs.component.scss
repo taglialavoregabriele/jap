@@ -22,6 +22,16 @@
   float: inline-end;
 }
 
+.title {
+  margin-bottom: 7vh;
+}
+
+.start-container {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+}
+
 /*
 .original-cards {}
 
