@@ -39,6 +39,7 @@ export class WordTypeGameComponent implements OnInit {
 
   constructor(protected storeService: StoreService, protected formBuilder: FormBuilder) { }
 
+  //TODO check if game is over
   ngOnInit(): void {
     this.storeService.getWordTypeDecks().then(decks => {
       this.decks = decks

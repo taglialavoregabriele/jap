@@ -1,23 +1,25 @@
 <button mat-icon-button (click)="resetGame()" class="reset-game" *ngIf="selectedDeck">
   <mat-icon>close</mat-icon>
 </button>
+<div class="start-container">
+  <label class="title">Select the right option</label>
 
-<div *ngIf="!selectedDeck">
-  <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck">
-    <mat-form-field>
-      <mat-label>Select deck</mat-label>
-      <mat-select formControlName="selectedDeck">
-        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-button type="submit">Start game</button>
-  </form>
+  <div *ngIf="!selectedDeck">
+    <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck">
+      <mat-form-field>
+        <mat-label>Select deck</mat-label>
+        <mat-select formControlName="selectedDeck">
+          <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button type="submit">Start game</button>
+    </form>
+  </div>
 </div>
-
 <div *ngIf="!gameEnded && selectedDeck" class="game-section">
-  <mat-chip class="original-word-chip">{{shuffledCards[0].name}}</mat-chip>
+  <mat-chip class="original-word-chip word-chip">{{shuffledCards[0].name}}</mat-chip>
   <div class="option-word-chip-section">
-    <mat-chip class="option-word-chip" *ngFor="let option of shuffledCards[0].options.slice()"
+    <mat-chip class="option-word-chip word-chip" *ngFor="let option of shuffledCards[0].options"
       (click)="clickOption(option.correct)">{{option.name}}</mat-chip>
   </div>
 </div>

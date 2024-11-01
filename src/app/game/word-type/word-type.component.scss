@@ -22,3 +22,13 @@
 .option-word-chip {
   margin: 5px;
 }
+
+.title {
+  margin-bottom: 7vh;
+}
+
+.start-container {
+  display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+}
