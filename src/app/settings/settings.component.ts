@@ -1,8 +1,11 @@
+
 import { MatchPairsDeck, WordTypeDeck, MatchPairsCard, ExportJson } from './../common/entities';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { SafeUrl } from '@angular/platform-browser';
 import { StoreService } from '../common/store.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -11,7 +14,9 @@ import { StoreService } from '../common/store.service';
   styleUrl: './settings.component.scss',
   standalone: true,
   imports: [
-    MatButtonModule
+    MatButtonModule,
+    CommonModule,
+    FormsModule
   ]
 })
 export class SettingsComponent implements OnInit {

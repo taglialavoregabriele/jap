@@ -2,9 +2,9 @@
   <mat-icon>close</mat-icon>
 </button>
 <div class="start-container">
-  <label class="title">Select the right option</label>
 
   <div *ngIf="!selectedDeck">
+    <label class="title">Select deck</label>
     <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck">
       <mat-form-field>
         <mat-label>Select deck</mat-label>
@@ -17,6 +17,7 @@
   </div>
 </div>
 <div *ngIf="!gameEnded && selectedDeck" class="game-section">
+  <label class="title">Select the right option ({{selectedDeck.name}})</label>
   <mat-chip class="original-word-chip word-chip">{{shuffledCards[0].name}}</mat-chip>
   <div class="option-word-chip-section">
     <mat-chip class="option-word-chip word-chip" *ngFor="let option of shuffledCards[0].options"

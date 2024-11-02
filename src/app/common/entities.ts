@@ -43,3 +43,17 @@ export interface ExportJson {
   matchPairsDecks: MatchPairsDeck[],
   wordTypeDecks: WordTypeDeck[]
 }
+
+export interface KanjiInfo {
+  data: {
+    is_common: boolean,
+    jlpt: string[],
+    japanese: [{
+      word: string,
+      reading: string
+    }],
+    senses: [{
+      english_definitions: string[]
+    }]
+  }
+}

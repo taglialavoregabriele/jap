@@ -1,0 +1,15 @@
+.new-card-containter {
+  display: flex;
+  overflow-x: auto;
+}
+
+.new-card {
+  outline: auto;
+  outline-color: gray;
+  margin: 5vh;
+  vertical-align: baseline;
+}
+
+.delete-option-button {
+  float: inline-end;
+}
