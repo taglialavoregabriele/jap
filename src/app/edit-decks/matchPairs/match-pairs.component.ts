@@ -108,18 +108,29 @@ export class EditMatchPairDecksComponent implements OnInit {
           this.decks[index].name = name;
         }
       } else {
-        this.decks.push({ _id: getLastId(this.decks), name, cards: [] });
+        let tmpDeck = { _id: getLastId(this.decks), name, cards: [] }
+        this.decks.push(tmpDeck);
+        this.selectedDeck = tmpDeck;
       }
     });
   }
 
   deleteDeck() {
+    if (!window.confirm('Are sure you want to delete this item ?')) return
     this.decks.splice(this.decks.findIndex(d => d._id === this.selectedDeck._id), 1)
     this.selectedDeck = null;
+    this.saveChanges();
   }
 
   saveChanges() {
-    console.log(this.decks)
+    this.selectedDeck?.cards.forEach(c => {
+      c.originalSentence = c.originalSentence.trim()
+      c.translation = c.translation.trim()
+    })
+    if (this.selectedDeck?.cards.find(c => c.originalSentence.length == 0 || c.translation.length == 0)) {
+      window.alert("There are some empty cards, please delete them or finish configuring them!")
+      return
+    }
     this.storeService.setMatchPairsDeck(this.decks)
   }
 }

@@ -29,7 +29,8 @@
         <mat-form-field appearance="outline" *ngFor="let option of card.options">
           <mat-label *ngIf="!option.correct">Wrong one</mat-label>
           <mat-label *ngIf="option.correct">Right one</mat-label>
-          <input matInput placeholder="Placeholder" [value]="option.name" [(ngModel)]="option.name">
+          <input matInput placeholder="{{option.correct ? 'Right one' : 'Wrong one'}}" [value]="option.name"
+            [(ngModel)]="option.name">
           <button mat-icon-button (click)="deleteOption(card, option._id)" *ngIf="!option.correct"
             class="delete-option-button">
             <mat-icon>close</mat-icon>
