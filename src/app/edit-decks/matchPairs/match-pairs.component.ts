@@ -132,5 +132,6 @@ export class EditMatchPairDecksComponent implements OnInit {
       return
     }
     this.storeService.setMatchPairsDeck(this.decks)
+    window.alert("Changes saved!")
   }
 }

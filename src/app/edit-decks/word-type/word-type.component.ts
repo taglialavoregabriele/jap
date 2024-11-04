@@ -104,12 +104,13 @@ export class EditWordTypeDeckComponent implements OnInit {
         _id: "0",
         name: '',
         correct: true,
+      },
+      {
+        _id: "1",
+        name: '',
+        correct: false,
       }]
     })
-  }
-
-  addDeck() {
-    this.decks.push(this.newDeck)
   }
 
   //TODO isNew? better way?
@@ -126,23 +127,50 @@ export class EditWordTypeDeckComponent implements OnInit {
     ).subscribe(name => {
       if (!isNew) {
         const index = this.decks.findIndex(d => d._id == this.selectedDeck._id);
-        console.log(index)
         if (index !== -1) {
           this.decks[index].name = name;
         }
       } else {
-        this.decks.push({ _id: getLastId(this.decks), name, cards: [] });
+        let tmpDeck = {
+          _id: getLastId(this.decks), name, cards: [
+            {
+              _id: getLastId(this.selectedDeck!.cards),
+              name: "",
+              options: [{
+                _id: "0",
+                name: '',
+                correct: true,
+              },
+              {
+                _id: "1",
+                name: '',
+                correct: false,
+              }]
+            }
+          ]
+        }
+        this.decks.push(tmpDeck);
+        this.selectedDeck = tmpDeck
       }
     });
   }
 
   deleteDeck() {
+    if (!window.confirm('Are sure you want to delete this item ?')) return
     this.decks.splice(this.decks.findIndex(d => d._id === this.selectedDeck._id), 1)
     this.selectedDeck = null;
   }
 
   saveChanges() {
-    console.log(this.decks)
+    if (this.selectedDeck.cards.length == 0) {
+      window.alert("There are no cards, please add some!")
+      return
+    }
+    if (this.selectedDeck.cards.find(c => c.name == '' || c.options.length == 1 || c.options.find(opt => opt.name == ''))) {
+      window.alert("There are some unfinished cards, please delete them or finish configuring them!")
+      return
+    }
     this.storeService.setWordTypeDeck(this.decks)
+    window.alert("Changes saved!")
   }
 }

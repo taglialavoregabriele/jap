@@ -36,7 +36,7 @@
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
-        <button mat-icon-button (click)="addOption(card)">
+        <button mat-icon-button (click)="addOption(card)" *ngIf="card.options.length<5">
           <mat-icon>add</mat-icon>
         </button>
         <button mat-icon-button (click)="deleteCard(i)">
@@ -50,7 +50,7 @@
       </button>
     </p>
   </div>
-  <button (click)="saveChanges()">
+  <button mat-button (click)="saveChanges()">
     save
   </button>
 </ng-template>
