@@ -8,8 +8,9 @@ $theme: mat.define-theme((color: (theme-type: light,
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   margin: 0;
-  padding: 30px;
-  height: 100%;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
 
   @include mat.all-component-themes($theme);
 }
