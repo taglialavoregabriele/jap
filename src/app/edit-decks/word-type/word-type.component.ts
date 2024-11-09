@@ -134,7 +134,7 @@ export class EditWordTypeDeckComponent implements OnInit {
         let tmpDeck = {
           _id: getLastId(this.decks), name, cards: [
             {
-              _id: getLastId(this.selectedDeck!.cards),
+              _id: "0",
               name: "",
               options: [{
                 _id: "0",
@@ -162,11 +162,11 @@ export class EditWordTypeDeckComponent implements OnInit {
   }
 
   saveChanges() {
-    if (this.selectedDeck.cards.length == 0) {
+    if (this.selectedDeck?.cards.length == 0) {
       window.alert("There are no cards, please add some!")
       return
     }
-    if (this.selectedDeck.cards.find(c => c.name == '' || c.options.length == 1 || c.options.find(opt => opt.name == ''))) {
+    if (this.selectedDeck?.cards.find(c => c.name == '' || c.options.length == 1 || c.options.find(opt => opt.name == ''))) {
       window.alert("There are some unfinished cards, please delete them or finish configuring them!")
       return
     }
