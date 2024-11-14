@@ -1,56 +1,133 @@
 <ng-container *ngTemplateOutlet="editDeckSection"></ng-container>
 
 <ng-template #editDeckSection>
-  <p>
-    <mat-form-field>
-      <mat-label>Select deck</mat-label>
-      <mat-select [(ngModel)]="selectedDeck">
-        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <!-- add edit button and pass current deck-->
-    <button mat-icon-button (click)="addDeckOpenModal(true)">
-      <mat-icon>add</mat-icon>
-    </button>
-    <button mat-icon-button (click)="addDeckOpenModal(false)">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button mat-icon-button (click)="deleteDeck()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </p>
-  <div *ngIf="selectedDeck"> <!-- TODO fix interface for new card -->
-    <div class="new-card-containter">
-      <div *ngFor="let card of selectedDeck!.cards; let i = index" class="new-card">
-        <mat-form-field appearance="outline">
-          <mat-label>Original</mat-label>
-          <input matInput placeholder="Placeholder" [value]="card.name" [(ngModel)]="card.name">
-        </mat-form-field>
-        <mat-form-field appearance="outline" *ngFor="let option of card.options">
-          <mat-label *ngIf="!option.correct">Wrong one</mat-label>
-          <mat-label *ngIf="option.correct">Right one</mat-label>
-          <input matInput placeholder="{{option.correct ? 'Right one' : 'Wrong one'}}" [value]="option.name"
-            [(ngModel)]="option.name">
-          <button mat-icon-button (click)="deleteOption(card, option._id)" *ngIf="!option.correct"
-            class="delete-option-button">
-            <mat-icon>close</mat-icon>
-          </button>
-        </mat-form-field>
-        <button mat-icon-button (click)="addOption(card)" *ngIf="card.options.length<5">
+  <div class="deck-editor-container">
+    <!-- Deck selection header remains the same -->
+    <div class="deck-header">
+      <mat-form-field appearance="fill">
+        <mat-label>Select deck</mat-label>
+        <mat-select [(ngModel)]="selectedDeck">
+          <mat-option *ngFor="let deck of decks" [value]="deck">{{
+            deck.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="deck-actions">
+        <button
+          mat-icon-button
+          (click)="addDeckOpenModal(true)"
+          matTooltip="Add Deck"
+        >
           <mat-icon>add</mat-icon>
         </button>
-        <button mat-icon-button (click)="deleteCard(i)">
-          <mat-icon>close</mat-icon>
+        <button
+          mat-icon-button
+          (click)="addDeckOpenModal(false)"
+          matTooltip="Edit Deck"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteDeck()" matTooltip="Delete Deck">
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>
-    <p>
-      <button mat-icon-button (click)="addCard()">
-        <mat-icon>add</mat-icon>
+
+    <!-- Cards section -->
+    <div *ngIf="selectedDeck" class="new-card-container">
+      <div
+        *ngFor="let card of selectedDeck.cards; let i = index"
+        class="new-card"
+      >
+        <!-- Question and options in a row layout -->
+        <button
+                mat-icon-button
+                class="delete-card-button"
+                (click)="deleteCard(i)"
+                matTooltip="Delete card"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+        <div class="card-content">
+          <!-- Question field -->
+          <div class="question-field">
+            <div   style="min-width: 240px;"  class="original-question">
+              <mat-form-field appearance="outline">
+                <mat-label>Original Text</mat-label>
+                <input 
+             
+                  matInput
+                  placeholder="Enter the Original Text"
+                  [(ngModel)]="card.name"
+                />
+              </mat-form-field>
+      
+            </div>
+
+            <div
+            class="option-row"
+            style="min-width: 240px;"
+              *ngFor="let option of card.options"
+             
+            >
+              <mat-form-field
+          
+                appearance="outline"
+                [ngClass]="option.correct ? 'correct-answer' : 'wrong-answer'"
+              >
+                <mat-label>{{
+                  option.correct ? "Correct Translation" : "Wrong Translation"
+                }}</mat-label>
+                <input
+             
+                  matInput
+                  [placeholder]="
+                    option.correct
+                      ? 'Enter correct answer'
+                      : 'Enter wrong answer'
+                  "
+                  [(ngModel)]="option.name"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  *ngIf="!option.correct"
+                  class="delete-option-button"
+                  (click)="deleteOption(card, option._id)"
+                  matTooltip="Delete option"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+            </div>
+            <!-- Add option button -->
+            <button
+              mat-icon-button
+              *ngIf="card.options.length < 5"
+              class="add-option-button"
+              (click)="addOption(card)"
+              matTooltip="Add wrong answer"
+            >
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add new card and save buttons remain the same -->
+    <div class="add-card-section">
+      <button mat-icon-button (click)="addCard()" matTooltip="Add new card">
+        <mat-icon>add_circle</mat-icon>
       </button>
-    </p>
+    </div>
+
+    <div class="save-section">
+      <button mat-raised-button (click)="saveChanges()">
+        <mat-icon>save</mat-icon>
+        Save Changes
+      </button>
+    </div>
   </div>
-  <button mat-button (click)="saveChanges()">
-    save
-  </button>
 </ng-template>

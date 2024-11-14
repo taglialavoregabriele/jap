@@ -1,49 +1,66 @@
-<ng-container *ngTemplateOutlet="editDeckSection"></ng-container>
+<ng-container  *ngTemplateOutlet="editDeckSection"></ng-container>
 
 <ng-template #editDeckSection>
-  <p>
-    <mat-form-field>
-      <mat-label>Select deck</mat-label>
-      <mat-select [(ngModel)]="selectedDeck">
-        <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <!-- add edit button and pass current deck-->
-    <button mat-icon-button (click)="addDeckOpenModal(true)">
-      <mat-icon>add</mat-icon>
-    </button>
-    <button mat-icon-button (click)="addDeckOpenModal(false)">
-      <mat-icon>edit</mat-icon>
-    </button>
-    <button mat-icon-button (click)="deleteDeck()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </p>
-  <div *ngIf="selectedDeck"> <!-- TODO fix interface for new card -->
-    <div>
-      <div *ngFor="let card of selectedDeck!.cards; let i = index">
-        <mat-form-field appearance="outline">
-          <mat-label>Original</mat-label>
-          <input matInput placeholder="Original" [value]="selectedDeck.cards[i].originalSentence"
-            [(ngModel)]="selectedDeck.cards[i].originalSentence">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Translation</mat-label>
-          <input matInput placeholder="Translation" [value]="selectedDeck.cards[i].translation"
-            [(ngModel)]="selectedDeck.cards[i].translation">
-        </mat-form-field>
-        <button mat-icon-button (click)="deleteCard(i)">
-          <mat-icon>close</mat-icon>
+  <div class="deck-editor-section">
+    <!-- Deck selection and actions header -->
+    
+    <div class="deck-header">
+      <mat-form-field appearance="fill">
+        <mat-label>Select deck</mat-label>
+        <mat-select [(ngModel)]="selectedDeck">
+          <mat-option *ngFor="let deck of decks" [value]="deck">{{deck.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <div class="deck-actions">
+        <button mat-icon-button class="add-deck" (click)="addDeckOpenModal(true)" matTooltip="Add new deck">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button class="edit-deck" (click)="addDeckOpenModal(false)" matTooltip="Edit deck">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button class="delete-deck" (click)="deleteDeck()" matTooltip="Delete deck">
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>
-    <p>
-      <button mat-icon-button (click)="addCard()" *ngIf="selectedDeck.cards.length < 10">
-        <mat-icon>add</mat-icon>
+
+    <!-- Cards section -->
+    <div class="cards-container" *ngIf="selectedDeck">
+      <div class="card-row" *ngFor="let card of selectedDeck.cards; let i = index">
+        <div class="card-inputs">
+          <mat-form-field appearance="outline">
+            <mat-label>Original</mat-label>
+            <input matInput placeholder="Enter original text" 
+                   [(ngModel)]="selectedDeck.cards[i].originalSentence">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Translation</mat-label>
+            <input matInput placeholder="Enter translation" 
+                   [(ngModel)]="selectedDeck.cards[i].translation">
+          </mat-form-field>
+        </div>
+
+        <button mat-icon-button class="delete-card" (click)="deleteCard(i)" matTooltip="Delete card">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <!-- Add card button -->
+      <div class="add-card-section" *ngIf="selectedDeck.cards.length < 10">
+        <button mat-icon-button (click)="addCard()" matTooltip="Add new card">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Save button -->
+    <div class="save-section">
+      <button mat-raised-button (click)="saveChanges()">
+        <mat-icon>save</mat-icon>
+        Save Changes
       </button>
-    </p>
+    </div>
   </div>
-  <button mat-button (click)="saveChanges()">
-    save
-  </button>
 </ng-template>

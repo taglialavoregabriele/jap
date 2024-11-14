@@ -1,48 +1,93 @@
-//TODO make this as wide as the screen
-.container {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
+/* Ensure the container spans the full width and height of the viewport */
+
+
+/* Sidebar Styling */
+.sidenav {
+  width: 20vh; /* Fixed sidebar width */
+  padding: 10px;
+  background-color: #f5f5f5;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
 }
+
+/* Main Content Area Styling */
 
 .sidenav-content {
-  height: 100%;
-  align-items: left;
-  justify-content: left;
+  height: 85vh;
+  align-items: center;
+  justify-content: center;
 }
 
-.sidenav {
-  padding: 10px;
-  width: 20vh;
-}
 
+/* Sidebar Menu Styling */
 .menu {
   display: flex;
   flex-direction: column;
-  justify-content: left;
+  justify-content: flex-start;
+  margin-top: 10px;
 }
 
 .menu-item {
-  display: inline-flex;
-  justify-content: flex-start;
-  margin-right: 0px;
-  width: -webkit-fill-available;
-  border-radius: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 16px;
+  color: #333333;
+  font-size: 16px;
+  margin-top: 10px;
+  font-weight: 500;
+  background-color: #ffffff; /* White background */
+  border-radius: 8px; /* Slightly rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Soft shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  text-align: left;
+}
+
+.menu-item:hover {
+  background-color: #f0f0f5; /* Light background on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+  transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+/* Styling for the main icon */
+.menu-icon {
+  margin-right: 10px;
+
+  color: #555555;
+}
+
+/* Aligns the arrow icon on the far right */
+.expand-menu-arrow {
+  margin-left: auto;
+  color: #888888;
+}
+
+/* Submenu Styles */
+.submenu {
+  padding-left: 20px; /* Indent submenu items */
+  background-color: #eeeeee;
+  display: flex;
+  margin-top: 5px;
+  flex-direction: column;
 }
 
 .menu-item-2 {
-  margin-right: 0px;
-  width: -webkit-fill-available;
-  border-radius: 0;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 8px;
+  color: #666666;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
+.menu-item-2:hover {
+  background-color: #d9d9d9;
+}
+
+/* Expand Sidebar Button */
 .expand-sidebar-arrow {
-  margin-top: 2px;
-  margin-left: 2px;
+  margin: 10px;
+  color: #333333;
 }
-
-/*
-TODO align icon on right
-.expand-menu-arrow {}
-*/

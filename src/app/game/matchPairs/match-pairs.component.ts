@@ -1,41 +1,47 @@
-import { MatchPairsCard, GameType } from '../../common/entities';
-import { Component, OnInit } from '@angular/core';
-import { StoreService } from '../../common/store.service';
-import { MatchPairsDeck, GameSettings } from '../../common/entities';
+import { Component, OnInit, ViewChildren, QueryList, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { SettingsDialogComponent, SettingsDialogModule } from '../settingsModal/settings-modal.component';
-import { CommonModule } from '@angular/common';
-import { shuffle } from '../../common/utils';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { StoreService } from '../../common/store.service';
+import { MatchPairsDeck, MatchPairsCard,GameType } from '../../common/entities';
+import { shuffle } from '../../common/utils'; // Importing shuffle function
+
+interface Connection {
+  start: { x: number; y: number };
+  end: { x: number; y: number };
+  correct: boolean;
+}
 
 @Component({
   selector: 'match-pairs',
   templateUrl: './match-pairs.component.html',
-  styleUrl: './match-pairs.component.scss',
+  styleUrls: ['./match-pairs.component.scss'],
   standalone: true,
   imports: [
-    MatIconModule,
-    MatButtonModule,
     CommonModule,
-    MatAutocompleteModule,
-    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
     MatSelectModule,
-    FormsModule,
+    MatFormFieldModule,
     ReactiveFormsModule
   ]
 })
-export class MatchPairsGameComponent implements OnInit {
+export class MatchPairsGameComponent implements OnInit, AfterViewInit {
+  @ViewChildren('originalCard') originalCards: QueryList<ElementRef>;
+  @ViewChildren('translationCard') translationCards: QueryList<ElementRef>;
+  @ViewChild('connectionsSvg') connectionsSvg: ElementRef;
+
   decks: MatchPairsDeck[];
   selectedDeck: MatchPairsDeck;
   clickedCard: MatchPairsCard;
   shuffledCards: MatchPairsCard[];
   gameWon: boolean;
-
+  connections: Connection[] = [];
   form: FormGroup;
 
   constructor(protected storeService: StoreService, protected formBuilder: FormBuilder) { }
@@ -50,6 +56,64 @@ export class MatchPairsGameComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    // Setup observers for card position changes
+    this.setupCardObservers();
+  }
+
+  private setupCardObservers() {
+    const observer = new MutationObserver(() => {
+      this.updateConnections();
+    });
+
+    const config = { attributes: true, childList: true, subtree: true };
+
+    // Observe each original and translation card
+    this.originalCards.forEach(card => observer.observe(card.nativeElement, config));
+    this.translationCards.forEach(card => observer.observe(card.nativeElement, config));
+  }
+
+  private updateConnections() {
+    this.connections = [];
+    
+    if (!this.selectedDeck) return;
+
+    // Generate connections for guessed pairs
+    this.selectedDeck.cards.forEach((card, index) => {
+      if (card.guessed) {
+        const originalCard = this.originalCards.get(index)?.nativeElement;
+        const translationCard = this.translationCards.toArray()
+          .find(el => el.nativeElement.textContent.trim() === card.translation)?.nativeElement;
+
+        if (originalCard && translationCard) {
+          const connection = this.calculateConnection(originalCard, translationCard);
+          this.connections.push({
+            ...connection,
+            correct: true
+          });
+        }
+      }
+    });
+  }
+
+  private calculateConnection(start: HTMLElement, end: HTMLElement): Connection {
+    const startRect = start.getBoundingClientRect();
+    const endRect = end.getBoundingClientRect();
+    const svgRect = this.connectionsSvg.nativeElement.getBoundingClientRect();
+
+    // Calculate line coordinates for the connection
+    return {
+      start: {
+        x: startRect.right - svgRect.left,
+        y: startRect.top - svgRect.top + startRect.height / 2
+      },
+      end: {
+        x: endRect.left - svgRect.left,
+        y: endRect.top - svgRect.top + endRect.height / 2
+      },
+      correct: true
+    };
+  }
   clickCard(card: MatchPairsCard, isOriginalSentence: boolean) {
     //TODO check conditions, bug if you click more than once on same button type
     if (!this.clickedCard || this.clickedCard.clickedOriginal && isOriginalSentence || this.clickedCard.clickedTranslation && !isOriginalSentence) {
@@ -63,10 +127,14 @@ export class MatchPairsGameComponent implements OnInit {
       this.clickedCard.clickedTranslation = !this.clickedCard.clickedOriginal
     } else {
       if (this.clickedCard._id == card._id) {
+        
+
         this.clickedCard.guessed = true;
         this.clickedCard.clickedOriginal = false
         this.clickedCard.clickedTranslation = false
         this.clickedCard = null
+        
+        this.updateConnections();
       } else {
         //TODO animation for wrong choice
         //lives system?
@@ -86,6 +154,8 @@ export class MatchPairsGameComponent implements OnInit {
     this.resetDeck()
     this.selectedDeck = null;
     this.gameWon = false;
+    this.connections=[];
+    this.form.reset();
   }
 
   shuffleDeck(cards: MatchPairsCard[]): MatchPairsCard[] {
@@ -99,4 +169,5 @@ export class MatchPairsGameComponent implements OnInit {
   get GameType(): typeof GameType {
     return GameType
   }
+
 }

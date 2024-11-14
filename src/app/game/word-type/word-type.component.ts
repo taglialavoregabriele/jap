@@ -11,6 +11,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   standalone: true,
@@ -22,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatCardModule,
     FormsModule,
     ReactiveFormsModule
   ],

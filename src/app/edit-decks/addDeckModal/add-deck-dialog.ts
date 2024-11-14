@@ -11,6 +11,7 @@ import { MatInputModule } from "@angular/material/input";
 
 @Component({
   templateUrl: "add-deck-dialog.html",
+  styleUrl: './add-deck-dialog.scss',
 })
 export class AddDeckDialogComponent implements OnInit {
 

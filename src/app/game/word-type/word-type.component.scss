@@ -1,34 +1,154 @@
-.reset-game {
-  float: inline-end;
+.game-container {
+  
+  background: white;
+  padding: 2rem;
+  height: 86vh; display: flex; align-items: center; justify-content: center ;
+
+ 
+
+  // Reset Button
+  .reset-game {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  // Deck Selection
+  .deck-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .selection-card {
+      width: 600px;
+      max-width: 600px;
+      padding: 2rem;
+      min-height: 300px;
+
+
+
+
+      mat-card-subtitle{
+        margin-left: 15px;
+        margin-bottom: 10px;
+      }
+      
+      mat-card-header {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .select-deck-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        mat-form-field {
+          width: 100%;
+        }
+
+        button {
+          height: 48px;
+        }
+      }
+    }
+  }
+
+  // Game Section
+  .game-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 2rem;
+
+    .game-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+
+      .deck-title {
+        font-size: 1.5rem;
+        color: #333;
+        margin: 0;
+        text-align: center;
+      }
+
+      .original-word {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        font-size: 2rem;
+        font-weight: 500;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .options-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        
+        mat-chip-set {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 1rem;
+          padding: 1rem;
+          
+          .option-chip {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            min-height: 48px;
+            background: white;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+            cursor: pointer;
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+              background: #f0f0f0;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-.original-word-chip {
-  max-width: fit-content;
-  margin-left: auto;
-  margin-right: auto;
-}
+// Responsive Adjustments
+@media (max-width: 768px) {
+  .game-container {
+    padding: 1rem;
 
-.game-section {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  grid-template-rows: "original-word-chip option-word-chip-section";
-}
+    .game-section {
+      .game-content {
+        .deck-title {
+          font-size: 1.2rem;
+        }
 
-.option-word-chip-section {
-  margin: 5px;
-}
+        .original-word {
+          padding: 1.5rem;
+          font-size: 1.5rem;
+        }
 
-.option-word-chip {
-  margin: 5px;
-}
-
-.title {
-  margin-bottom: 7vh;
-}
-
-.start-container {
-  display: grid;
-  grid-auto-flow: row;
-  justify-content: center;
+        .options-container {
+          mat-chip-set {
+            flex-direction: column;
+            width: 100%;
+            
+            .option-chip {
+              width: 100%;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+  }
 }
