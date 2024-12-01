@@ -10,7 +10,8 @@ const createWindow = () => {
     width: 800,
     height: 600,
     backgroundColor: '#ffffff',
-    icon: `file://${__dirname}/dist/assets/logo.png}`
+    icon: `file://${__dirname}/dist/assets/logo.png}`,
+    autoHideMenuBar: true
   })
   win.loadURL(`file://${__dirname}/dist/jpn_help/browser/index.html`)
 }

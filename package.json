@@ -9,7 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "electron": "electron .",
-    "electron-build": "ng build --configuration production"
+    "electron-build": "ng build --configuration production",
+    "package": "electron-packager . jpn-help --platform=win32 --asar --icon=./assets/kemuri.svg"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "electron-json-storage": "^4.6.0",
+    "electron-packager": "^17.1.2",
     "pouchdb": "^9.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

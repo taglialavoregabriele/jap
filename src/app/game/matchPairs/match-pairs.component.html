@@ -1,118 +1,102 @@
-
-
 <div class="root-div">
 
-    <!-- Initial deck selection screen -->
-    <div  *ngIf="!selectedDeck" class="deck-selection">
-      <mat-card class="selection-card">
-        <mat-card-header>
-          <mat-card-title >Language Learning Game</mat-card-title>
-          <mat-card-subtitle style="margin-top: 20px; margin-bottom: 20px;">Select a deck to begin matching pairs</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck-form">
-            <mat-form-field appearance="fill" class="deck-select">
-              <mat-label>Choose your deck</mat-label>
-              <mat-select formControlName="selectedDeck">
-                <mat-option *ngFor="let deck of decks" [value]="deck">
-                  {{deck.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-              <mat-icon>play_arrow</mat-icon>
-              Start Game
-            </button>
-          </form>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  
-    <!-- Game screen -->
-    <div *ngIf="selectedDeck" class="game-container">
-      <!-- Header with reset button and score -->
-      <div class="game-header">
-        <h2 class="deck-title">{{selectedDeck.name}}</h2>
-        <div class="game-controls">
-          <button mat-raised-button color="warn" (click)="resetGame()">
-            <mat-icon>refresh</mat-icon>
-            Reset Game
+  <!-- Initial deck selection screen -->
+  <div *ngIf="!selectedDeck" class="deck-selection">
+    <mat-card class="selection-card">
+      <mat-card-header>
+        <mat-card-title>Match the right pairs</mat-card-title>
+        <mat-card-subtitle style="margin-top: 20px; margin-bottom: 20px;">Select a deck to begin matching
+          pairs</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit(form)" class="select-deck-form">
+          <mat-form-field appearance="fill" class="deck-select">
+            <mat-label>Choose your deck</mat-label>
+            <mat-select formControlName="selectedDeck">
+              <mat-option *ngFor="let deck of decks" [value]="deck">
+                {{deck.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+            <mat-icon>play_arrow</mat-icon>
+            Start Game
           </button>
-        </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Game screen -->
+  <div *ngIf="selectedDeck" class="game-container">
+    <!-- Header with reset button and score -->
+    <div class="game-header">
+      <h2 class="deck-title">{{selectedDeck.name}}</h2>
+      <div class="game-controls">
+        <button mat-raised-button color="warn" (click)="resetGame()">
+          <mat-icon>refresh</mat-icon>
+          Reset Game
+        </button>
       </div>
-  
-      <!-- Game content -->
-      <div class="cards-container">
-        <!-- Original words -->
-        <div class="cards-column original-cards">
-          <h3 class="column-title">Original Words</h3>
-          <div class="cards-list">
-            <div *ngFor="let card of selectedDeck.cards" class="card-wrapper" #originalCard>
-              <button mat-raised-button
-                      (click)="clickCard(card, true)"
-                      [ngClass]="{
+    </div>
+
+    <!-- Game content -->
+    <div class="cards-container">
+      <!-- Original words -->
+      <div class="cards-column original-cards">
+        <h3 class="column-title">Original Words</h3>
+        <div class="cards-list">
+          <div *ngFor="let card of selectedDeck.cards" class="card-wrapper" #originalCard>
+            <button mat-raised-button (click)="clickCard(card, true)" [ngClass]="{
                         'clicked': card.clickedOriginal,
                         'guessed': card.guessed
-                      }"
-                      [disabled]="card.guessed"
-                      class="word-card">
-                {{card.originalSentence}}
-              </button>
-            </div>
+                      }" [disabled]="card.guessed" class="word-card">
+              {{card.originalSentence}}
+            </button>
           </div>
         </div>
-  
-        <!-- SVG container for connection lines -->
-        <div class="connections-container">
-          <svg #connectionsSvg class="connections-svg">
-            <g *ngFor="let connection of connections">
-              <line [attr.x1]="connection.start.x"
-                    [attr.y1]="connection.start.y"
-                    [attr.x2]="connection.end.x"
-                    [attr.y2]="connection.end.y"
-                    class="connection-line"
-                    [ngClass]="{'correct': connection.correct}"/>
-            </g>
-          </svg>
-        </div>
-  
-        <!-- Translations -->
-        <div class="cards-column translation-cards">
-          <h3 class="column-title">Translations</h3>
-          <div class="cards-list">
-            <div *ngFor="let card of shuffledCards" class="card-wrapper" #translationCard>
-              <button mat-raised-button
-                      (click)="clickCard(card, false)"
-                      [ngClass]="{
+      </div>
+
+      <!-- SVG container for connection lines -->
+      <div class="connections-container">
+        <svg #connectionsSvg class="connections-svg">
+          <g *ngFor="let connection of connections">
+            <line [attr.x1]="connection.start.x" [attr.y1]="connection.start.y" [attr.x2]="connection.end.x"
+              [attr.y2]="connection.end.y" class="connection-line" [ngClass]="{'correct': connection.correct}" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- Translations -->
+      <div class="cards-column translation-cards">
+        <h3 class="column-title">Translations</h3>
+        <div class="cards-list">
+          <div *ngFor="let card of shuffledCards" class="card-wrapper" #translationCard>
+            <button mat-raised-button (click)="clickCard(card, false)" [ngClass]="{
                         'clicked': card.clickedTranslation,
                         'guessed': card.guessed
-                      }"
-                      [disabled]="card.guessed"
-                      class="word-card">
-                {{card.translation}}
-              </button>
-            </div>
+                      }" [disabled]="card.guessed" class="word-card">
+              {{card.translation}}
+            </button>
           </div>
         </div>
       </div>
     </div>
-  
-    <!-- Victory dialog -->
-    <div *ngIf="gameWon" class="victory-overlay">
-      <mat-card class="victory-card">
-        <mat-card-header>
-          <mat-card-title>Congratulations!</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>You've successfully matched all the pairs!</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary" (click)="resetGame()">Play Again</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+  </div>
+
+  <!-- Victory dialog -->
+  <div *ngIf="gameWon" class="victory-overlay">
+    <mat-card class="victory-card">
+      <mat-card-header>
+        <mat-card-title>Congratulations!</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>You've successfully matched all the pairs!</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="resetGame()">Play Again</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 
 </div>
-
-
-
