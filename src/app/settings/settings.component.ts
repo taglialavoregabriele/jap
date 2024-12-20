@@ -1,11 +1,12 @@
 
-import { MatchPairsDeck, WordTypeDeck, MatchPairsCard, ExportJson } from './../common/entities';
+import { MatchPairsDeck, WordTypeDeck, MatchPairsCard, ExportJson, KanjiInfo } from './../common/entities';
 import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { SafeUrl } from '@angular/platform-browser';
 import { StoreService } from '../common/store.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { JishoService } from '../common/jisho.service';
 
 
 @Component({
@@ -21,11 +22,12 @@ import { FormsModule } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private storeService: StoreService) { }
+  constructor(private storeService: StoreService, private jishoService: JishoService) { }
 
   downloadJsonHref: SafeUrl
   wordTypeDecks: WordTypeDeck[]
   matchPairsDecks: MatchPairsDeck[]
+  word: string
 
 
   ngOnInit(): void {
@@ -65,4 +67,8 @@ export class SettingsComponent implements OnInit {
     document.body.removeChild(element);
   }
 
+
+  searchOnJisho(){
+    this.jishoService.getKanjiInfo(this.word).subscribe(res => console.log(res as KanjiInfo))
+  }
 }
