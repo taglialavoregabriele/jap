@@ -1,0 +1,28 @@
+<div class="game-container">
+  <!-- Sentence Area -->
+  <div class="sentence-area">
+    <div *ngFor="let block of sentenceBlocks; let i = index" class="sentence-block" [class.empty]="!block.text">
+      <div *ngIf="block.text; else emptyBlock">{{ block.text }}</div>
+      <ng-template #emptyBlock>
+        <div class="empty-slot" (click)="fillEmptySlot(i)"></div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- Selection Area -->
+  <div class="selection-area">
+    <div *ngFor="let option of options; let i = index" class="option-block" (click)="selectOption(option, i)">
+      {{ option.text }}
+    </div>
+  </div>
+
+  <!-- Moving Block -->
+  <div *ngIf="movingBlock" class="moving-block" [ngStyle]="{
+    '--start-top': movingBlock.startTop + 'px',
+    '--start-left': movingBlock.startLeft + 'px',
+    '--target-top': movingBlock.targetTop + 'px',
+    '--target-left': movingBlock.targetLeft + 'px'
+  }">
+    {{ movingBlock.text }}
+  </div>
+</div>

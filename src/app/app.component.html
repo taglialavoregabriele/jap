@@ -1,21 +1,24 @@
-<mat-drawer-container  style="height: 100%;"  >
+<mat-drawer-container style="height: 100%;">
   <!-- Sidebar (Drawer) -->
   <mat-drawer #drawer class="sidenav" mode="side" opened>
     <div class="menu">
       <!-- Game Section -->
 
-  
+
       <button mat-button type="button" (click)="showFillerGames = !showFillerGames" class="menu-item">
         <mat-icon class="menu-icon">games</mat-icon>
         <span>Game</span>
         <mat-icon class="expand-menu-arrow">{{ showFillerGames ? 'expand_less' : 'expand_more' }}</mat-icon>
       </button>
-   
-  
-      
+
+
+
       <div *ngIf="showFillerGames" class="submenu">
-        <button mat-button type="button" (click)="goToGame(GameType.MATCH_PAIRS)" class="menu-item-2">Match Pairs</button>
+        <button mat-button type="button" (click)="goToGame(GameType.MATCH_PAIRS)" class="menu-item-2">Match
+          Pairs</button>
         <button mat-button type="button" (click)="goToGame(GameType.WORD_TYPE)" class="menu-item-2">Word Type</button>
+        <button mat-button type="button" (click)="goToGame(GameType.NOT_IMPLEMENTED)"
+          class="menu-item-2">sentences</button>
       </div>
 
       <!-- Decks Section -->
@@ -25,8 +28,10 @@
         <mat-icon class="expand-menu-arrow">{{ showFillerDecks ? 'expand_less' : 'expand_more' }}</mat-icon>
       </button>
       <div *ngIf="showFillerDecks" class="submenu">
-        <button mat-button type="button" (click)="goToEditDecks(GameType.MATCH_PAIRS)" class="menu-item-2">Match Pairs</button>
-        <button mat-button type="button" (click)="goToEditDecks(GameType.WORD_TYPE)" class="menu-item-2">Word Type</button>
+        <button mat-button type="button" (click)="goToEditDecks(GameType.MATCH_PAIRS)" class="menu-item-2">Match
+          Pairs</button>
+        <button mat-button type="button" (click)="goToEditDecks(GameType.WORD_TYPE)" class="menu-item-2">Word
+          Type</button>
       </div>
 
       <!-- Settings Section -->
@@ -34,14 +39,19 @@
         <mat-icon class="menu-icon">settings</mat-icon>
         <span>Settings</span>
       </button>
+
+      <button mat-button type="button" (click)="goToJisho()" class="menu-item">
+        <mat-icon class="menu-icon">book</mat-icon>
+        <span>jisho</span>
+      </button>
     </div>
   </mat-drawer>
 
   <!-- Main Content Area -->
-  <div  class="sidenav-content">
+  <div class="sidenav-content">
     <button type="button" mat-icon-button (click)="drawer.toggle()" class="expand-sidebar-arrow">
       <mat-icon>menu</mat-icon>
     </button>
-    <router-outlet/>
+    <router-outlet />
   </div>
 </mat-drawer-container>

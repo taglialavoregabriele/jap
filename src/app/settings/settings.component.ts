@@ -22,13 +22,11 @@ import { JishoService } from '../common/jisho.service';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private storeService: StoreService, private jishoService: JishoService) { }
+  constructor(private storeService: StoreService) { }
 
   downloadJsonHref: SafeUrl
   wordTypeDecks: WordTypeDeck[]
   matchPairsDecks: MatchPairsDeck[]
-  word: string
-
 
   ngOnInit(): void {
     this.storeService.getMatchPairsDecks().then(decks => {
@@ -67,8 +65,4 @@ export class SettingsComponent implements OnInit {
     document.body.removeChild(element);
   }
 
-
-  searchOnJisho(){
-    this.jishoService.getKanjiInfo(this.word).subscribe(res => console.log(res as KanjiInfo))
-  }
 }

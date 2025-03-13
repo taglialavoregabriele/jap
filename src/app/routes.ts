@@ -5,6 +5,8 @@ import { EditMatchPairDecksComponent } from "./edit-decks/matchPairs/match-pairs
 import { EditWordTypeDeckComponent } from "./edit-decks/word-type/word-type.component";
 import { WordTypeGameComponent } from "./game/word-type/word-type.component";
 import { AppComponent } from "./app.component";
+import { JishoComponent } from "./jisho/jisho.component";
+import { SentencesComponent } from "./game/sentences/sentences.component";
 
 export const routes: Routes = [
   {
@@ -20,6 +22,10 @@ export const routes: Routes = [
           {
             path: 'wordtype',
             component: WordTypeGameComponent
+          },
+          {
+            path: 'sentences',
+            component: SentencesComponent
           }
 
         ]
@@ -27,6 +33,10 @@ export const routes: Routes = [
       {
         path: 'settings',
         component: SettingsComponent
+      },
+      {
+        path: 'jisho',
+        component: JishoComponent
       },
       {
         path: 'editdecks',

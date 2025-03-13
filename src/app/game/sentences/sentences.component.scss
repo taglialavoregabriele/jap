@@ -1,0 +1,88 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+/* Sentence Area */
+.sentence-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.sentence-block {
+  padding: 15px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+  /* Required for absolute positioning of moving blocks */
+}
+
+.sentence-block.empty {
+  background-color: #ddd;
+}
+
+.empty-slot {
+  width: 50px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+/* Selection Area */
+.selection-area {
+  display: flex;
+  gap: 10px;
+}
+
+.option-block {
+  padding: 15px;
+  background-color: #2196F3;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.option-block:hover {
+  background-color: #1976D2;
+}
+
+/* Moving Block Animation */
+.moving-block {
+  position: fixed;
+  /* Use fixed positioning to animate from the clicked block */
+  top: var(--start-top);
+  left: var(--start-left);
+  padding: 15px;
+  background-color: #2196F3;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 10;
+  animation: moveToCell 0.5s ease-out forwards;
+}
+
+@keyframes moveToCell {
+  to {
+    top: var(--target-top);
+    left: var(--target-left);
+  }
+}

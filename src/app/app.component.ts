@@ -34,7 +34,7 @@ export class AppComponent {
   goToGame(gameType: GameType) {
     if (gameType == GameType.MATCH_PAIRS) this.router.navigateByUrl('/game/matchpairs')
     else if (gameType == GameType.WORD_TYPE) this.router.navigateByUrl('/game/wordtype')
-    else if (gameType == GameType.NOT_IMPLEMENTED) this.router.navigateByUrl('/game/notimplemented')
+    else if (gameType == GameType.NOT_IMPLEMENTED) this.router.navigateByUrl('/game/sentences')
   }
   goToEditDecks(gameType: GameType) {
     if (gameType == GameType.MATCH_PAIRS) this.router.navigateByUrl('/editdecks/matchpairs')
@@ -43,6 +43,10 @@ export class AppComponent {
   }
   goToSettings() {
     this.router.navigateByUrl('/settings')
+  }
+
+  goToJisho() {
+    this.router.navigateByUrl('/jisho')
   }
 
   get GameType(): typeof GameType {
