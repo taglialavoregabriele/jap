@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
@@ -18,6 +18,8 @@ import { CommonModule } from '@angular/common';
   ],
 })
 export class SentencesComponent {
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
+
   // Sentence blocks (some are empty)
   sentenceBlocks = [
     { text: 'I' },
@@ -61,6 +63,10 @@ export class SentencesComponent {
       // Get the target position of the empty slot
       const targetPosition = this.getBlockPosition('sentence-area', index);
 
+      // Hide the original block
+      const originalBlock = this.el.nativeElement.querySelector(`.selection-area .option-block:nth-child(${this.selectedOption.index + 1})`);
+      this.renderer.addClass(originalBlock, 'hidden');
+
       // Start the moving animation
       this.movingBlock = {
         text: this.selectedOption.text,
@@ -75,7 +81,10 @@ export class SentencesComponent {
         this.sentenceBlocks[index].text = this.selectedOption!.text;
         this.selectedOption = null;
         this.movingBlock = null;
-      }, 200); // Match the duration of the animation
+
+        // Show the original block again
+        //this.renderer.removeClass(originalBlock, 'hidden');
+      }, 150); // Match the duration of the animation
     }
   }
 

@@ -80,6 +80,11 @@ body {
   animation: moveToCell 0.5s ease-out forwards;
 }
 
+.hidden {
+  visibility: hidden;
+
+}
+
 @keyframes moveToCell {
   to {
     top: var(--target-top);
