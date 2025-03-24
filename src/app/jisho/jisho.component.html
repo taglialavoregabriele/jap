@@ -1,2 +1,58 @@
-<input matInput [(ngModel)]="word" placeholder="Enter word">
-<button mat-button (click)="searchOnJisho()">search</button>
+<div class="dictionary-container">
+  <div class="search-section">
+    <h1>Dictionary</h1>
+    <div class="search-box">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search for a word..." (keyup.enter)="searchWord()">
+      <button (click)="searchWord()">
+        <i class="search-icon">🔍</i>
+      </button>
+    </div>
+
+    <div *ngIf="searchHistory.length" class="search-history">
+      <h3>Recent searches:</h3>
+      <ul>
+        <li *ngFor="let term of searchHistory" (click)="searchFromHistory(term)">
+          {{ term }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="results-section">
+    <div *ngIf="isLoading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Searching for "{{ searchTerm }}"...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="wordData" class="word-result">
+      <div class="word-header">
+        <h2>{{ words[0].word }}</h2>
+        <p class="phonetic">{{ words[0].reading }}</p><!-- TODO list -->
+      </div>
+
+      <div *ngFor="let meaning of senses" class="meaning">
+        <h3>{{ meaning.parts_of_speech }}</h3>
+
+        <div class="definitions">
+          <div class="definition">
+            <p>{{ meaning.english_definitions }}</p>
+          </div>
+        </div>
+
+        <!--
+        <div *ngIf="meaning.synonyms.length" class="synonyms">
+          <strong>Synonyms:</strong>
+          <span *ngFor="let synonym of meaning.synonyms.slice(0, 5)" class="synonym-tag">
+            {{ synonym }}
+          </span>
+        </div>
+        -->
+
+      </div>
+    </div>
+  </div>
+</div>

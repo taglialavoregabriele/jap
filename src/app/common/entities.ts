@@ -48,12 +48,17 @@ export interface KanjiInfo {
   data: {
     is_common: boolean,
     jlpt: string[],
-    japanese: [{
-      word: string,
-      reading: string
-    }],
-    senses: [{
-      english_definitions: string[]
-    }]
+    japanese: Word[],
+    senses: Sense[]
   }
+}
+
+export interface Word {
+  word: string,
+  reading: string
+}
+
+export interface Sense {
+  english_definitions: string[],
+  parts_of_speech: string[]
 }
