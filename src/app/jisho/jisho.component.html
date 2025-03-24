@@ -1,9 +1,10 @@
-<div class="dictionary-container">
+<div class="kanji-dictionary-container">
   <div class="search-section">
-    <h1>Dictionary</h1>
+    <h1>Japanese Dictionary</h1>
     <div class="search-box">
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Search for a word..." (keyup.enter)="searchWord()">
-      <button (click)="searchWord()">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Search for kanji or word..."
+        (keyup.enter)="searchKanji()">
+      <button (click)="searchKanji()">
         <i class="search-icon">🔍</i>
       </button>
     </div>
@@ -28,30 +29,37 @@
       {{ errorMessage }}
     </div>
 
-    <div *ngIf="wordData" class="word-result">
-      <div class="word-header">
-        <h2>{{ words[0].word }}</h2>
-        <p class="phonetic">{{ words[0].reading }}</p><!-- TODO list -->
-      </div>
+    <div *ngIf="kanjiData" class="kanji-results">
+      <div *ngFor="let entry of kanjiData.data; trackBy: trackByIndex" class="kanji-entry">
+        <div class="kanji-header">
+          <div class="kanji-meta">
+            <span class="common-tag" *ngIf="entry.is_common">Common</span>
+            <span class="jlpt-tag">JLPT: {{ getJlptLevels(entry.jlpt) }}</span>
+          </div>
 
-      <div *ngFor="let meaning of senses" class="meaning">
-        <h3>{{ meaning.parts_of_speech }}</h3>
-
-        <div class="definitions">
-          <div class="definition">
-            <p>{{ meaning.english_definitions }}</p>
+          <div class="kanji-readings">
+            <div *ngFor="let word of entry.japanese" class="reading">
+              <h2>{{ word.word }}</h2>
+              <p class="reading-text">{{ word.reading }}</p>
+            </div>
           </div>
         </div>
 
-        <!--
-        <div *ngIf="meaning.synonyms.length" class="synonyms">
-          <strong>Synonyms:</strong>
-          <span *ngFor="let synonym of meaning.synonyms.slice(0, 5)" class="synonym-tag">
-            {{ synonym }}
-          </span>
-        </div>
-        -->
+        <div class="meanings-section">
+          <div *ngFor="let sense of entry.senses" class="meaning">
+            <div class="part-of-speech">
+              <span *ngFor="let pos of sense.parts_of_speech" class="pos-tag">
+                {{ pos }}
+              </span>
+            </div>
 
+            <ul class="definitions">
+              <li *ngFor="let def of sense.english_definitions">
+                {{ def }}
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

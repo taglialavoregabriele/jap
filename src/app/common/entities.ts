@@ -45,12 +45,12 @@ export interface ExportJson {
 }
 
 export interface KanjiInfo {
-  data: {
+  data: [{
     is_common: boolean,
     jlpt: string[],
     japanese: Word[],
     senses: Sense[]
-  }
+  }]
 }
 
 export interface Word {
