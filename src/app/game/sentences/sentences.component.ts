@@ -81,9 +81,6 @@ export class SentencesComponent {
         this.sentenceBlocks[index].text = this.selectedOption!.text;
         this.selectedOption = null;
         this.movingBlock = null;
-
-        // Show the original block again
-        //this.renderer.removeClass(originalBlock, 'hidden');
       }, 150); // Match the duration of the animation
     }
   }
