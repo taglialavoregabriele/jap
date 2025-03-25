@@ -7,8 +7,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StoreService } from '../../common/store.service';
-import { MatchPairsDeck, MatchPairsCard,GameType } from '../../common/entities';
-import { shuffle } from '../../common/utils'; // Importing shuffle function
+import { MatchPairsDeck, MatchPairsCard, GameType } from '../../common/entities';
+import { shuffle } from '../../common/utils';
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+  keyframes
+} from '@angular/animations';
 
 interface Connection {
   start: { x: number; y: number };
@@ -29,6 +36,20 @@ interface Connection {
     MatSelectModule,
     MatFormFieldModule,
     ReactiveFormsModule
+  ],
+  animations: [
+    trigger('wrongChoice', [
+      transition('normal => wrong', [
+        animate('0.5s', keyframes([
+          style({ transform: 'translateX(0)', offset: 0 }),
+          style({ transform: 'translateX(-10px)', offset: 0.1 }),
+          style({ transform: 'translateX(10px)', offset: 0.2 }),
+          style({ transform: 'translateX(-10px)', offset: 0.3 }),
+          style({ transform: 'translateX(10px)', offset: 0.4 }),
+          style({ transform: 'translateX(0)', offset: 0.5 })
+        ]))
+      ])
+    ])
   ]
 })
 export class MatchPairsGameComponent implements OnInit, AfterViewInit {
@@ -43,6 +64,7 @@ export class MatchPairsGameComponent implements OnInit, AfterViewInit {
   gameWon: boolean;
   connections: Connection[] = [];
   form: FormGroup;
+  isWrongChoice = false;
 
   constructor(protected storeService: StoreService, protected formBuilder: FormBuilder) { }
 
@@ -75,7 +97,7 @@ export class MatchPairsGameComponent implements OnInit, AfterViewInit {
 
   private updateConnections() {
     this.connections = [];
-    
+
     if (!this.selectedDeck) return;
 
     // Generate connections for guessed pairs
@@ -127,17 +149,25 @@ export class MatchPairsGameComponent implements OnInit, AfterViewInit {
       this.clickedCard.clickedTranslation = !this.clickedCard.clickedOriginal
     } else {
       if (this.clickedCard._id == card._id) {
-        
-
         this.clickedCard.guessed = true;
         this.clickedCard.clickedOriginal = false
         this.clickedCard.clickedTranslation = false
         this.clickedCard = null
-        
+
         this.updateConnections();
       } else {
-        //TODO animation for wrong choice
-        //lives system?
+        card.isWrongOriginal = isOriginalSentence;
+        this.clickedCard.isWrongOriginal = !isOriginalSentence;
+        card.isWrongTranslation = !isOriginalSentence;
+        this.clickedCard.isWrongTranslation = isOriginalSentence;
+
+
+        setTimeout(() => {
+          card.isWrongOriginal = false
+          this.clickedCard.isWrongOriginal = false
+          card.isWrongTranslation = false
+          this.clickedCard.isWrongTranslation = false
+        }, 500);
       }
     }
     this.gameWon = this.selectedDeck!.cards.findIndex(c => !c.guessed) == -1
@@ -154,7 +184,7 @@ export class MatchPairsGameComponent implements OnInit, AfterViewInit {
     this.resetDeck()
     this.selectedDeck = null;
     this.gameWon = false;
-    this.connections=[];
+    this.connections = [];
     this.form.reset();
   }
 
@@ -169,5 +199,4 @@ export class MatchPairsGameComponent implements OnInit, AfterViewInit {
   get GameType(): typeof GameType {
     return GameType
   }
-
 }

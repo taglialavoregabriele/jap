@@ -81,7 +81,7 @@ export class EditMatchPairDecksComponent implements OnInit {
     this.selectedDeck!.cards.push({
       _id: getLastId(this.selectedDeck!.cards),
       originalSentence: '',
-      translation: ''
+      translation: '',
     })
   }
 

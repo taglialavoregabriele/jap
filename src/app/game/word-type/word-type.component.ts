@@ -12,6 +12,13 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
+import {
+  trigger,
+  style,
+  animate,
+  transition,
+  keyframes
+} from '@angular/animations';
 
 @Component({
   standalone: true,
@@ -28,7 +35,21 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule
   ],
   templateUrl: './word-type.component.html',
-  styleUrl: './word-type.component.scss'
+  styleUrl: './word-type.component.scss',
+  animations: [
+    trigger('wrongChoice', [
+      transition('normal => wrong', [
+        animate('0.5s', keyframes([
+          style({ transform: 'translateX(0)', offset: 0 }),
+          style({ transform: 'translateX(-5px)', offset: 0.1 }),
+          style({ transform: 'translateX(5px)', offset: 0.2 }),
+          style({ transform: 'translateX(-5px)', offset: 0.3 }),
+          style({ transform: 'translateX(5px)', offset: 0.4 }),
+          style({ transform: 'translateX(0)', offset: 0.5 })
+        ]))
+      ])
+    ])
+  ]
 })
 export class WordTypeGameComponent implements OnInit {
   form: FormGroup;
@@ -38,6 +59,7 @@ export class WordTypeGameComponent implements OnInit {
   settingsModalRef: MatDialogRef<SettingsDialogComponent>
   settings: GameSettings = { selectedGame: GameType.WORD_TYPE }
   gameEnded: boolean
+  isWrongOption: boolean
 
   constructor(protected storeService: StoreService, protected formBuilder: FormBuilder) { }
 
@@ -61,11 +83,14 @@ export class WordTypeGameComponent implements OnInit {
       this.shuffledCards.splice(0, 1)
       this.gameEnded = this.shuffledCards.length == 0
       if (this.gameEnded) {
-        //TODO right animation
         this.selectedDeck = null
       }
     } else {
-      //TODO wrong animation
+      this.isWrongOption = true;
+
+      setTimeout(() => {
+        this.isWrongOption = false
+      }, 500);
     }
   }
 

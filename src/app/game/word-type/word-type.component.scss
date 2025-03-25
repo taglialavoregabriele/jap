@@ -1,10 +1,13 @@
 .game-container {
-  
+
   background: white;
   padding: 2rem;
-  height: 86vh; display: flex; align-items: center; justify-content: center ;
+  height: 86vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
- 
+
 
   // Reset Button
   .reset-game {
@@ -20,7 +23,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  
+
     .selection-card {
       width: 600px;
       max-width: 600px;
@@ -30,11 +33,11 @@
 
 
 
-      mat-card-subtitle{
+      mat-card-subtitle {
         margin-left: 15px;
         margin-bottom: 10px;
       }
-      
+
       mat-card-header {
         margin-bottom: 2rem;
         text-align: center;
@@ -91,14 +94,14 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        
+
         mat-chip-set {
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
           gap: 1rem;
           padding: 1rem;
-          
+
           .option-chip {
             font-size: 1.1rem;
             padding: 1rem 2rem;
@@ -141,7 +144,7 @@
           mat-chip-set {
             flex-direction: column;
             width: 100%;
-            
+
             .option-chip {
               width: 100%;
               justify-content: center;
@@ -149,6 +152,29 @@
           }
         }
       }
+    }
+  }
+}
+
+// Victory Dialog Styles
+.victory-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .victory-card {
+    padding: 2rem;
+    text-align: center;
+
+    mat-card-actions {
+      justify-content: center;
     }
   }
 }

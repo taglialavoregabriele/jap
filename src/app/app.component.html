@@ -1,24 +1,23 @@
 <mat-drawer-container style="height: 100%;">
-  <!-- Sidebar (Drawer) -->
+  <!-- Sidebar -->
   <mat-drawer #drawer class="sidenav" mode="side" opened>
     <div class="menu">
+
       <!-- Game Section -->
-
-
       <button mat-button type="button" (click)="showFillerGames = !showFillerGames" class="menu-item">
         <mat-icon class="menu-icon">games</mat-icon>
-        <span>Game</span>
+        <span>Games</span>
         <mat-icon class="expand-menu-arrow">{{ showFillerGames ? 'expand_less' : 'expand_more' }}</mat-icon>
       </button>
-
-
 
       <div *ngIf="showFillerGames" class="submenu">
         <button mat-button type="button" (click)="goToGame(GameType.MATCH_PAIRS)" class="menu-item-2">Match
           Pairs</button>
         <button mat-button type="button" (click)="goToGame(GameType.WORD_TYPE)" class="menu-item-2">Word Type</button>
+        <!-- TODO
         <button mat-button type="button" (click)="goToGame(GameType.NOT_IMPLEMENTED)"
           class="menu-item-2">sentences</button>
+          -->
       </div>
 
       <!-- Decks Section -->

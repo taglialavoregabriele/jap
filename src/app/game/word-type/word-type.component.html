@@ -1,12 +1,8 @@
 <!-- game.component.html -->
 <div class="game-container">
-  <!-- Reset Button -->
-  <button mat-icon-button (click)="resetGame()" class="reset-game" *ngIf="selectedDeck">
-    <mat-icon>close</mat-icon>
-  </button>
 
   <!-- Deck Selection -->
-  <div *ngIf="!selectedDeck" class="deck-selection">
+  <div *ngIf="!selectedDeck && !gameEnded" class="deck-selection">
     <mat-card class="selection-card">
       <mat-card-header>
         <mat-card-title>Select the right option</mat-card-title>
@@ -48,11 +44,26 @@
       <div class="options-container">
         <mat-chip-set>
           <mat-chip *ngFor="let option of shuffledCards[0].options" (click)="clickOption(option.correct)"
-            class="option-chip">
+            [@wrongChoice]="isWrongOption ? 'wrong' : 'normal'" class="option-chip">
             {{option.name}}
           </mat-chip>
         </mat-chip-set>
       </div>
     </div>
+  </div>
+
+  <!-- Victory dialog -->
+  <div *ngIf="gameEnded" class="victory-overlay">
+    <mat-card class="victory-card">
+      <mat-card-header>
+        <mat-card-title>Congratulations!</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>You've successfully matched all the pairs!</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="resetGame()">Play Again</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>

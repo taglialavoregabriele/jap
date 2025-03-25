@@ -1,4 +1,8 @@
 <div class="root-div">
+  <!-- Reset Button -->
+  <button mat-icon-button (click)="resetGame()" class="reset-game" *ngIf="selectedDeck">
+    <mat-icon>close</mat-icon>
+  </button>
 
   <!-- Initial deck selection screen -->
   <div *ngIf="!selectedDeck" class="deck-selection">
@@ -29,15 +33,16 @@
 
   <!-- Game screen -->
   <div *ngIf="selectedDeck" class="game-container">
-    <!-- Header with reset button and score -->
     <div class="game-header">
       <h2 class="deck-title">{{selectedDeck.name}}</h2>
+      <!-- meglio cosi?
       <div class="game-controls">
         <button mat-raised-button color="warn" (click)="resetGame()">
           <mat-icon>refresh</mat-icon>
           Reset Game
         </button>
       </div>
+      -->
     </div>
 
     <!-- Game content -->
@@ -47,7 +52,8 @@
         <h3 class="column-title">Original Words</h3>
         <div class="cards-list">
           <div *ngFor="let card of selectedDeck.cards" class="card-wrapper" #originalCard>
-            <button mat-raised-button (click)="clickCard(card, true)" [ngClass]="{
+            <button mat-raised-button (click)="clickCard(card, true)"
+              [@wrongChoice]="card.isWrongOriginal ? 'wrong' : 'normal'" [ngClass]="{
                         'clicked': card.clickedOriginal,
                         'guessed': card.guessed
                       }" [disabled]="card.guessed" class="word-card">
@@ -72,7 +78,8 @@
         <h3 class="column-title">Translations</h3>
         <div class="cards-list">
           <div *ngFor="let card of shuffledCards" class="card-wrapper" #translationCard>
-            <button mat-raised-button (click)="clickCard(card, false)" [ngClass]="{
+            <button mat-raised-button (click)="clickCard(card, false)"
+              [@wrongChoice]="card.isWrongTranslation ? 'wrong' : 'normal'" [ngClass]="{
                         'clicked': card.clickedTranslation,
                         'guessed': card.guessed
                       }" [disabled]="card.guessed" class="word-card">

@@ -2,6 +2,7 @@ import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 
+//TODO in 2.0
 @Component({
   selector: 'app-sentences',
   standalone: true,

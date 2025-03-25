@@ -4,7 +4,8 @@ export interface IdEntity {
 export interface MatchPairsCard extends IdEntity {
   originalSentence: string,
   translation: string,
-  //TODO make less accroccato
+  isWrongOriginal?: boolean,
+  isWrongTranslation?: boolean,
   clickedOriginal?: boolean,
   clickedTranslation?: boolean,
   guessed?: boolean
