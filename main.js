@@ -1,21 +1,25 @@
-const { app, BrowserWindow } = require("electron")
-let win;
-const os = require('os');
-const storage = require('electron-json-storage');
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
 
-storage.setDataPath(os.tmpdir());
-//TODO logo in assets
-const createWindow = () => {
+function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
-    backgroundColor: '#ffffff',
-    icon: `file://${__dirname}/dist/assets/logo.png}`,
-    autoHideMenuBar: true
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false, // Only for debugging - remove in production
+      webSecurity: false // Temporarily for debugging
+    }
   })
-  win.loadURL(`file://${__dirname}/dist/jpn_help/browser/index.html`)
+
+  // Force open DevTools (even if window is blank)
+  win.webContents.openDevTools({ mode: 'detach' })
+
+  // Load your index.html with explicit path
+  win.loadFile(path.join(__dirname, 'dist/jpn_help/browser/index.html')).catch(err => {
+    console.error('Failed to load:', err)
+    win.loadURL(`data:text/html,<h1>Load Error</h1><pre>${err}</pre>`)
+  })
 }
 
-app.whenReady().then(() => {
-  createWindow()
-})
+app.whenReady().then(createWindow)

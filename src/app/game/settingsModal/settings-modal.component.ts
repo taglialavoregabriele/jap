@@ -70,6 +70,16 @@ export class SettingsDialogComponent implements OnInit {
     MatSelectModule,
     ReactiveFormsModule
   ],
-  exports: [SettingsDialogComponent]
+  exports: [SettingsDialogComponent],
+  providers: [
+    {
+      provide: 'DOCUMENT',
+      useFactory: () => window.document
+    },
+    {
+      provide: 'WINDOW',
+      useFactory: () => window
+    }
+  ]
 })
 export class SettingsDialogModule { }

@@ -1,0 +1,11 @@
+{
+  "/jisho": {
+    "target": "https://jisho.org/api/v1/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/jisho/": ""
+    }
+  }
+}
