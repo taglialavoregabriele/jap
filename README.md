@@ -2,6 +2,6 @@
 run `npm run watch` then run `npm run electron`
 
 # build:
-run `npm run electron-build`
+guarda in package.json
 
-# TODO fix proxy for electron build and ngserve (put in options)
+# TODO organize build better
